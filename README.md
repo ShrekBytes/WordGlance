@@ -93,13 +93,10 @@ A: Nope! Works instantly after installation.
 A: Yes it works flawlessly on both desktop and mobile.
 
 **Q: Is my data safe?**  
-A: Yes! Everything stays in your browser. No data is sent to us.
+A: Yes! Everything stays in your browser. No data is sent to us, and the script is open source so you can inspect the code if you want to verify.
 
 **Q: Why isn't it working?**  
-A: Make sure your userscript manager (Violentmonkey/Tampermonkey) is installed and enabled. Try refreshing the page.
-
-**Q: Can I customize it?**  
-A: Yes! Access settings through your userscript manager or modify the code directly.
+A: Make sure your userscript manager (Violentmonkey/Tampermonkey) is installed and enabled and the script is also enabled. Try refreshing the page.
 
 **Q: The translation seems wrong?**  
 A: Try using "Auto-detect" for source language, or select specific languages in settings.
@@ -109,9 +106,6 @@ A: Yes! WordGlance works on any website where you can select text.
 
 **Q: How do I change the target language?**  
 A: Right-click your userscript manager icon → WordGlance Settings → Choose your language.
-
-**Q: Can I use it for learning languages?**  
-A: Absolutely! It's great for reading foreign websites and learning new vocabulary.
 
 **Q: Why do some words show "No definition found"?**  
 A: Very new words, slang, or technical terms might not be in the dictionary. Try synonyms or simpler terms.
