@@ -152,9 +152,7 @@ const CONFIG = {
 4. Submit a pull request
 
 ### Issues & Support
-- 🐛 [Report bugs](https://github.com/ShrekBytes/WordGlance/issues)
-- 💡 [Request features](https://github.com/ShrekBytes/WordGlance/issues)
-- 📖 [View source code](https://github.com/ShrekBytes/WordGlance)
+Found a bug? Want a feature? [Open an issue](https://github.com/ShrekBytes/WordGlance/issues) or submit a pull request!
 
 ## 📄 License
 
