@@ -2,6 +2,9 @@
 
 Get instant dictionary definitions and translations for any text on any website! Just select text and click the book icon.
 
+> Want extension of this script? - [WordGlance Firefox Extension](placeholder) 
+
+
 [![Install Userscript](https://img.shields.io/badge/Install%20Userscript-WordGlance-blue?style=for-the-badge&logo=userscript)](https://raw.githubusercontent.com/ShrekBytes/WordGlance/main/wordglance.user.js)
 [![View on GreasyFork](https://img.shields.io/badge/View%20on-GreasyFork-4E9A06?style=for-the-badge&logo=greasyfork)](https://greasyfork.org/en/scripts/546617-wordglance-dictionary-translation-tooltip)
 
@@ -160,16 +163,6 @@ const CONFIG = {
 
 Found a bug? Want a feature? [Open an issue](https://github.com/ShrekBytes/WordGlance/issues) or submit a pull request!
 
-##
-
-> **💡 Why not a browser extension and will there be one in the future?**
-> 
-> **No, there will never be a browser extension version.** WordGlance is intentionally built as a userscript because userscripts are simply better:
-> - **⚡ Lighter & Faster** - No bloated extension overhead
-> - **🌐 Cross-platform** - Works on Chrome, Firefox, Safari, Edge with the same code
-> - **🔧 Easy to manage** - Update instantly, customize easily, no store approval delays
-> - **🔒 More secure** - You can inspect the code, no hidden tracking
-> - **📱 Universal** - One script works everywhere instead of separate extensions
 
 *Love WordGlance? Give it a ⭐ star on GitHub!*
 
