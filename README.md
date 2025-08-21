@@ -1,170 +1,131 @@
 # WordGlance 📖
 
-**Instant dictionary definitions and translations for any text on the web**
+Get instant dictionary definitions and translations for any text on any website! Just select text and click the book icon.
 
-Select any word or phrase on a webpage and get instant definitions, translations, synonyms, and examples - no typing required!
+[![Install from GreasyFork](https://img.shields.io/badge/Install-GreasyFork-orange.svg)](https://greasyfork.org/scripts/wordglance)
+[![Install Direct](https://img.shields.io/badge/Install-Direct-blue.svg)](https://github.com/ShrekBytes/WordGlance/raw/main/wordglance.user.js)
+[![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/ShrekBytes/WordGlance)
 
-![WordGlance Demo](https://via.placeholder.com/600x300/3498db/white?text=Select+text+→+Click+📖+→+Get+instant+definitions)
+## ✨ What it does
 
-## Table of Contents
+- **📚 Dictionary**: Get definitions, examples, synonyms and antonyms
+- **🌍 Translation**: Translate to 40+ languages instantly  
+- **⚡ Fast**: Smart caching for instant results
+- **🎨 Beautiful**: Clean interface with dark mode
+- **🔧 Customizable**: Choose your languages and preferences
 
-- [What is WordGlance?](#what-is-wordglance)
-- [Quick Start](#quick-start)
-- [How to Use](#how-to-use)
-- [Settings](#settings)
-- [Supported Languages](#supported-languages)
-- [FAQ](#faq)
-- [For Developers](#for-developers)
+## 🚀 How to install
 
-## What is WordGlance?
+### Step 1: Get a userscript manager
+Install **Tampermonkey** (it's free!):
+- [Chrome](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) 
+- [Firefox](https://addons.mozilla.org/firefox/addon/tampermonkey/)
+- [Safari](https://apps.apple.com/app/tampermonkey/id1482490089)
+- [Edge](https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd)
 
-WordGlance makes learning new words effortless. Instead of opening a dictionary app or Google Translate, just:
+### Step 2: Install WordGlance
+**Option 1 (Recommended):** [Install from GreasyFork](https://greasyfork.org/scripts/wordglance) *(link will be updated)*
 
-1. **Select** any word or phrase on any website
-2. **Click** the 📖 icon that appears
-3. **Get** instant definitions, translations, and examples
+**Option 2:** [Install directly](https://github.com/ShrekBytes/WordGlance/raw/main/wordglance.user.js)
 
-Perfect for:
-- 📚 Students learning new vocabulary
-- 🌍 Reading foreign websites or documents
-- 📖 Book lovers discovering new words
-- 💼 Professionals encountering technical terms
+### Step 3: Test it!
+1. Go to any website
+2. Select some text 
+3. Click the 📖 icon that appears
+4. Enjoy instant definitions and translations!
 
-## Quick Start
+## 📱 How to use
 
-### Install in 30 seconds:
+1. **Select text** - Highlight any word or phrase
+2. **Click the 📖 icon** - It appears near your selection  
+3. **Browse results** - Use arrows to see more definitions/translations
+4. **Adjust settings** - Right-click Tampermonkey icon → WordGlance Settings
 
-1. **Get Tampermonkey** (if you don't have it):
-   - [Chrome](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) • [Firefox](https://addons.mozilla.org/firefox/addon/tampermonkey/) • [Safari](https://apps.apple.com/app/tampermonkey/id1482490089) • [Edge](https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd)
+### 💡 Tips
+- Works best with **single words** for definitions
+- Great for **short phrases** for translations  
+- Supports **40+ languages** including Spanish, French, German, Chinese, Japanese, Arabic, and more
 
-2. **Install WordGlance**:
-   - [**Click here to install →**](https://github.com/ShrekBytes/WordGlance/raw/main/wordglance.user.js)
+## ⚙️ Settings
 
-3. **Test it**:
-   - Select this word: **serendipity**
-   - Click the 📖 icon
-   - Enjoy your instant definition!
+Click the settings gear to customize:
 
-## How to Use
+- **🌙 Dark Mode** - Easy on the eyes for night browsing
+- **🌍 Languages** - Choose source and target languages
+- **🗂️ Cache** - Clear stored data if needed
 
-### Basic Usage
-- **Select text**: Highlight any word or phrase (up to 5 words)
-- **Click 📖**: The book icon appears near your selection
-- **Read results**: See definitions, translations, synonyms, and examples
-- **Navigate**: Use ← → arrows for multiple definitions/translations
+### Popular language combinations:
+- English → Spanish (`en` → `es`)
+- English → French (`en` → `fr`) 
+- Auto-detect → Chinese (`auto` → `zh`)
+- Any language → English (`auto` → `en`)
 
-### What You Get
-- **📖 Definitions**: Clear explanations with examples
-- **🔄 Translations**: 40+ languages supported
-- **📝 Synonyms & Antonyms**: Expand your vocabulary
-- **🎯 Examples**: See words used in context
-- **🌙 Dark Mode**: Easy on your eyes
+## 🌍 Supported languages
 
-## Settings
+**Major languages:** English, Spanish, French, German, Italian, Portuguese, Russian, Chinese, Japanese, Korean, Arabic, Hindi, Bengali
 
-Access settings: Right-click Tampermonkey icon → WordGlance Settings
+**All 40+ languages:** English, Spanish, French, German, Italian, Portuguese, Russian, Dutch, Swedish, Danish, Norwegian, Finnish, Polish, Czech, Slovak, Hungarian, Romanian, Bulgarian, Croatian, Serbian, Slovenian, Estonian, Latvian, Lithuanian, Ukrainian, Greek, Hebrew, Japanese, Korean, Chinese, Arabic, Hindi, Bengali, Turkish, Thai, Vietnamese, Indonesian, Malay, Filipino, Swahili, Amharic, Zulu
 
-| Setting | What it does | 
-|---------|--------------|
-| **Dark Mode** | Switch between light and dark themes |
-| **From Language** | Language to translate from (auto-detect recommended) |
-| **To Language** | Your preferred translation language |
-| **Clear Cache** | Remove stored definitions to free up space |
+## ❓ Common questions
 
-## Supported Languages
+**Q: Is it free?**  
+A: Yes! Completely free and no ads.
 
-WordGlance translates between 40+ languages:
+**Q: Do I need to create an account?**  
+A: Nope! Works instantly after installation.
 
-**Popular languages**: English, Spanish, French, German, Chinese, Japanese, Arabic, Russian, Portuguese, Italian, Korean, Hindi, Bengali
+**Q: Does it work on mobile?**  
+A: Designed for desktop browsers. Mobile support depends on your browser.
 
-**Full list**: Auto-detect, English, Spanish, French, German, Italian, Portuguese, Russian, Japanese, Korean, Chinese, Arabic, Hindi, Bengali, Turkish, Dutch, Swedish, Danish, Norwegian, Finnish, Polish, Czech, Slovak, Hungarian, Romanian, Bulgarian, Croatian, Serbian, Slovenian, Estonian, Latvian, Lithuanian, Ukrainian, Greek, Hebrew, Thai, Vietnamese, Indonesian, Malay, Filipino, Swahili, Amharic, Zulu
+**Q: Is my data safe?**  
+A: Yes! Everything stays in your browser. No data is sent to us.
 
-*Note: Dictionary definitions are in English*
+**Q: Why isn't it working?**  
+A: Make sure Tampermonkey is installed and enabled. Try refreshing the page.
 
-## FAQ
+**Q: Can I customize it?**  
+A: Yes! Access settings through Tampermonkey or modify the code directly.
 
-### Getting Started
-
-**Q: Is it really free?**  
-A: Yes! Completely free, no accounts needed.
-
-**Q: Will it slow down my browser?**  
-A: No, WordGlance is lightweight and only works when you select text.
-
-**Q: Does it work on all websites?**  
-A: Yes, it works on any website where you can select text.
-
-### Using WordGlance
-
-**Q: What text can I select?**  
-A: Any words or short phrases (up to 5 words, 100 characters max).
-
-**Q: Why can't I select certain text?**  
-A: WordGlance filters out numbers-only, special characters, and very long selections.
-
-**Q: How accurate are translations?**  
-A: Very good for common words and phrases. For complex text, use dedicated translation tools.
-
-**Q: Can I translate entire paragraphs?**  
-A: WordGlance is designed for words and short phrases for the best experience.
-
-### Technical Questions
-
-**Q: Does it store my data?**  
-A: WordGlance only stores definitions locally in your browser for faster loading. No personal data is collected.
-
-**Q: What if a website blocks it?**  
-A: Very rare, but some sites with strict security might block userscripts.
-
-**Q: Can I use it offline?**  
-A: No, it needs internet to fetch definitions and translations.
-
-### Problems?
-
-**Q: The 📖 icon doesn't appear**  
-A: Make sure Tampermonkey is enabled and try refreshing the page.
-
-**Q: No definitions or translations show up**  
-A: Check your internet connection and try again in a few seconds.
-
-**Q: Settings don't save**  
-A: Make sure Tampermonkey has permission to store data.
+**Q: The translation seems wrong?**  
+A: Try using "Auto-detect" for source language, or select specific languages in settings.
 
 ---
 
-## For Developers
+## 👨‍💻 For developers
 
-### Technical Overview
-WordGlance is a userscript built with vanilla JavaScript that provides real-time dictionary and translation services through free APIs.
-
-### Architecture
-- **APIs Used**: Dictionary API (dictionaryapi.dev) for definitions, Free Translate API for translations
-- **Caching**: LRU cache system with 100-item default limit
-- **Performance**: Debounced requests, request cancellation, optimized DOM manipulation
-- **Storage**: Uses GM_setValue/GM_getValue for persistent settings and cache
-
-### Key Configuration
+### Configuration
+Modify the `CONFIG` object for advanced customization:
 ```javascript
 const CONFIG = {
-    debounceTime: 150,
-    maxDefinitions: 9,
-    maxTranslations: 8,
-    cacheSize: 100,
-    apiTimeout: 10000
+    debounceTime: 150,        // API call delay (ms)
+    maxDefinitions: 9,        // Max definitions to show  
+    maxTranslations: 8,       // Max translations to show
+    cacheSize: 100,          // Cache size limit
+    apiTimeout: 10000        // Request timeout (ms)
 };
 ```
 
+### APIs used
+- **Dictionary**: [Dictionary API](https://dictionaryapi.dev/) - Free English dictionary
+- **Translation**: [Free Translate API](https://ftapi.pythonanywhere.com/) - Multi-language translation
+
 ### Contributing
-1. Fork the repository
+1. Fork the repo
 2. Make your changes
-3. Test on multiple websites
+3. Test thoroughly  
 4. Submit a pull request
 
-**Issues & Feature Requests**: [GitHub Issues](https://github.com/ShrekBytes/WordGlance/issues)
+### Issues & Support
+- 🐛 [Report bugs](https://github.com/ShrekBytes/WordGlance/issues)
+- 💡 [Request features](https://github.com/ShrekBytes/WordGlance/issues)
+- 📖 [View source code](https://github.com/ShrekBytes/WordGlance)
 
-### License
-GPL-3.0 - Free to use, modify, and distribute under the same license.
+## 📄 License
+
+Open source under [GPL-3.0 License](LICENSE). Free to use, modify, and share!
 
 ---
 
-**Made by [ShrekBytes](https://github.com/ShrekBytes) • [Install WordGlance](https://github.com/ShrekBytes/WordGlance/raw/main/wordglance.user.js) • [Report Issues](https://github.com/ShrekBytes/WordGlance/issues)**
+**Made with ❤️ by [ShrekBytes](https://github.com/ShrekBytes)**
+
+*Love WordGlance? Give it a ⭐ star on GitHub!*
