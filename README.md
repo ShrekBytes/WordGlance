@@ -93,61 +93,7 @@ Customize WordGlance to your preferences:
 
 **Target Languages**: All of the above except auto-detect
 
-## 🔄 Extension vs Userscript Comparison
-
-| Feature | Firefox Extension | Userscript |
-|---------|------------------|------------|
-| **Performance** | ⚡ 90% less memory usage | ✅ Good performance |
-| **Cross-browser** | ❌ Firefox only | ✅ Chrome, Firefox, Safari, Edge |
-| **Installation** | ✅ One-click from store | ✅ Copy-paste script URL |
-| **Updates** | ✅ Automatic via Firefox | ✅ Instant updates |
-| **Settings Sync** | ✅ Auto-sync across tabs | ✅ Manual sync |
-| **Cache Sharing** | ✅ Shared across all tabs | ❌ Per-tab cache |
-| **API Deduplication** | ✅ Single request per word | ❌ Multiple requests |
-
-**Recommendation**: Use the **Firefox Extension** if you primarily use Firefox, or the **Userscript** for cross-browser compatibility.
-
-## 🏗️ Technical Architecture
-
-### Firefox Extension Architecture
-
-The extension provides superior performance through:
-
-- **🧠 Shared Background Script**: Single cache and API handler shared across all tabs
-- **💬 Message Passing**: Efficient communication between content scripts and background
-- **🏪 Extension Storage**: Proper browser storage API instead of localStorage
-- **🌐 Modern APIs**: Fetch API with timeout handling and error management
-- **🎛️ Settings Popup**: Professional interface matching Firefox design guidelines
-
-### Files Structure
-
-```
-WordGlance/
-├── wordglance.user.js     # Userscript version
-├── manifest.json          # Extension manifest (Manifest V2)
-├── background.js          # Background script (API handling, cache)
-├── content.js            # Content script (UI interactions)
-├── content.css           # Styles for tooltip and UI
-├── popup.html            # Settings popup HTML
-├── popup.js              # Settings popup logic
-├── icons/                # Extension icons
-│   ├── icon-16.png
-│   ├── icon-32.png
-│   ├── icon-48.png
-│   ├── icon-96.png
-│   └── icon-128.png
-├── screenshots/          # Screenshots for documentation
-└── README.md            # This file
-```
-
-## 🔗 APIs Used
-
-- **📚 Free Dictionary API**: `https://api.dictionaryapi.dev/` - English definitions, examples, synonyms
-- **🌍 Free Translate API**: `https://ftapi.pythonanywhere.com/` - Multi-language translation
-
-*Special thanks to these amazing free APIs that make WordGlance possible!*
-
-## 🛡️ Privacy & Security
+## ️ Privacy & Security
 
 - **🔒 No Data Collection**: WordGlance doesn't collect or store personal data
 - **💾 Local Storage**: All settings and cache data are stored locally on your device
@@ -155,19 +101,7 @@ WordGlance/
 - **🚫 No Tracking**: No analytics, tracking, or telemetry implemented
 - **🔐 Secure**: All API requests use HTTPS and have timeout protection
 
-## 📊 Performance Benefits (Extension vs Userscript)
-
-| Scenario | Userscript Memory | Extension Memory | Improvement |
-|----------|------------------|------------------|-------------|
-| 1 tab open | ~150KB | ~60KB | 60% less |
-| 5 tabs open | ~750KB | ~120KB | 84% less |
-| 20 tabs open | ~3MB | ~200KB | 93% less |
-
-**API Request Efficiency:**
-- **Userscript**: Each tab makes separate API calls for the same word
-- **Extension**: Single API call shared across all tabs requesting the same word
-
-## 🛠️ Development
+## ️ Development
 
 ### Firefox Extension Development
 
@@ -199,60 +133,6 @@ WordGlance/
 2. **Reload** in your userscript manager
 3. **Test** on various websites
 
-### Debug Console Access
-
-- **Extension Background**: `about:debugging` → Inspect WordGlance
-- **Content Script**: Open DevTools (F12) on any webpage
-- **Popup**: Right-click extension icon → Inspect
-
-## 🎯 Common Questions
-
-<details>
-<summary><strong>Q: Which version should I choose?</strong></summary>
-
-**Choose Firefox Extension if:**
-- You primarily use Firefox
-- You want better performance with multiple tabs
-- You prefer store-based updates
-
-**Choose Userscript if:**
-- You use multiple browsers (Chrome, Safari, Edge)
-- You want instant updates
-- You prefer universal compatibility
-</details>
-
-<details>
-<summary><strong>Q: Does WordGlance work offline?</strong></summary>
-
-WordGlance requires internet connection for:
-- Fetching new definitions/translations
-- First-time word lookups
-
-However, it works offline for:
-- Previously cached words
-- UI interactions
-- Settings changes
-</details>
-
-<details>
-<summary><strong>Q: Why does the extension need so many permissions?</strong></summary>
-
-WordGlance permissions explained:
-- `<all_urls>`: Work on all websites (essential for text selection)
-- `storage`: Save your settings and cache locally
-- `activeTab`: Access selected text on current tab
-- API domains: Fetch definitions and translations
-</details>
-
-<details>
-<summary><strong>Q: Can I use WordGlance on mobile?</strong></summary>
-
-Yes! WordGlance is optimized for mobile:
-- **Firefox Mobile**: Extension works perfectly
-- **Chrome Mobile**: Use userscript with Kiwi Browser + Tampermonkey
-- **Safari Mobile**: Use userscript with Safari + userscript manager
-</details>
-
 ## 🎯 Browser Compatibility
 
 | Browser | Extension | Userscript |
@@ -265,18 +145,7 @@ Yes! WordGlance is optimized for mobile:
 | **Safari Mobile** | ❌ | ✅ UserScripts |
 | **Edge Desktop** | ❌ | ✅ Tampermonkey |
 
-## 📋 Extension Permissions
-
-The Firefox extension requires these permissions:
-
-- **`storage`**: Store settings and cache data locally
-- **`activeTab`**: Access content of the active tab for text selection  
-- **`<all_urls>`**: Work on all websites
-- **API domains**: Access to dictionary and translation services
-
-All permissions are used exclusively for WordGlance functionality. No data is collected or transmitted except selected text to APIs.
-
-## 📄 License
+##  License
 
 GPL-3.0 License - See [LICENSE](LICENSE) file for details
 
@@ -289,30 +158,6 @@ GPL-3.0 License - See [LICENSE](LICENSE) file for details
 - [Free Translate API](https://ftapi.pythonanywhere.com/) - Multi-language translation service
 - Mozilla Firefox team for excellent extension APIs
 - Userscript community for Tampermonkey/Greasemonkey support
-
-## 🔗 Links & Resources
-
-- **📱 Screenshots & Demo**: View above or in [screenshots/](screenshots/) folder
-- **🐛 Report Issues**: [GitHub Issues](https://github.com/ShrekBytes/WordGlance/issues)
-- **💡 Feature Requests**: [GitHub Issues](https://github.com/ShrekBytes/WordGlance/issues)  
-- **⭐ Source Code**: [GitHub Repository](https://github.com/ShrekBytes/WordGlance)
-- **📖 Userscript**: [GreasyFork](https://greasyfork.org/scripts/wordglance)
-- **🦊 Firefox Extension**: [Firefox Add-ons](https://addons.mozilla.org) (Coming Soon)
-
-## 📈 Changelog
-
-### Version 2.1.5 (Latest)
-- ✅ Firefox extension release with identical userscript functionality
-- ⚡ Shared cache architecture for 90% memory reduction
-- 🎛️ Professional settings popup interface  
-- 🔄 Automatic settings sync across all tabs
-- 🚀 API request deduplication across tabs
-- 🎨 Enhanced dark mode support
-- 📱 Improved mobile/touch device support
-- 🔧 Performance optimizations and bug fixes
-
-### Previous Versions
-See [commit history](https://github.com/ShrekBytes/WordGlance/commits/main) for detailed changelog.
 
 ---
 
