@@ -153,10 +153,19 @@ async function fetchDefinition(word) {
     }
     
     const promise = new Promise((resolve, reject) => {
+        // Create AbortController for timeout (compatible across Firefox versions)
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => {
+            controller.abort();
+            reject(createErrorMessage('API_TIMEOUT'));
+        }, CONFIG.apiTimeout);
+        
         fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`, {
-            signal: AbortSignal.timeout(CONFIG.apiTimeout)
+            signal: controller.signal
         })
         .then(async response => {
+            clearTimeout(timeoutId);
+            
             if (response.status === 404) {
                 reject(createErrorMessage('NO_DEFINITION'));
                 return;
@@ -222,15 +231,18 @@ async function fetchDefinition(word) {
                 antonyms: uniqueAntonyms
             };
             
-            // Cache the result
+            // Cache the result (fix: don't pass undefined parameters)
             addToCache('definitions', word, result);
             
             resolve(result);
         })
         .catch(error => {
-            if (error.name === 'TimeoutError') {
+            clearTimeout(timeoutId);
+            
+            if (error.name === 'AbortError') {
                 reject(createErrorMessage('API_TIMEOUT'));
             } else {
+                console.log('Definition fetch error:', error);
                 reject(createErrorMessage('NETWORK_ERROR'));
             }
         });
@@ -269,10 +281,19 @@ async function fetchTranslation(text, sourceLanguage, targetLanguage) {
             url += `&sl=${sourceLanguage}`;
         }
         
+        // Create AbortController for timeout (compatible across Firefox versions)
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => {
+            controller.abort();
+            reject(createErrorMessage('API_TIMEOUT'));
+        }, CONFIG.apiTimeout);
+        
         fetch(url, {
-            signal: AbortSignal.timeout(CONFIG.apiTimeout)
+            signal: controller.signal
         })
         .then(async response => {
+            clearTimeout(timeoutId);
+            
             if (response.status === 404) {
                 reject(createErrorMessage('NO_TRANSLATION'));
                 return;
@@ -339,9 +360,12 @@ async function fetchTranslation(text, sourceLanguage, targetLanguage) {
             }
         })
         .catch(error => {
-            if (error.name === 'TimeoutError') {
+            clearTimeout(timeoutId);
+            
+            if (error.name === 'AbortError') {
                 reject(createErrorMessage('API_TIMEOUT'));
             } else {
+                console.log('Translation fetch error:', error);
                 reject(createErrorMessage('NETWORK_ERROR'));
             }
         });
@@ -360,75 +384,87 @@ async function fetchTranslation(text, sourceLanguage, targetLanguage) {
 }
 
 // Message handler for content script communication
-browser.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
-    try {
-        switch (message.action) {
-            case 'fetchDefinition':
-                const definitionResult = await fetchDefinition(message.word);
-                return { success: true, data: definitionResult };
-                
-            case 'fetchTranslation':
-                const translationResult = await fetchTranslation(
-                    message.text, 
-                    message.sourceLanguage, 
-                    message.targetLanguage
-                );
-                return { success: true, data: translationResult };
-                
-            case 'incrementWordsLearned':
-                const result = await browser.storage.local.get(['wordglance-total-words-learned']);
-                const currentCount = result['wordglance-total-words-learned'] || 0;
-                const newCount = currentCount + 1;
-                await browser.storage.local.set({ 'wordglance-total-words-learned': newCount });
-                return { success: true, count: newCount };
-                
-            case 'getSettings':
-                const settings = await browser.storage.local.get([
-                    'wordglance-target-language',
-                    'wordglance-source-language', 
-                    'wordglance-dark-mode',
-                    'wordglance-total-words-learned'
-                ]);
-                return {
-                    success: true,
-                    settings: {
-                        targetLanguage: settings['wordglance-target-language'] || 'bn',
-                        sourceLanguage: settings['wordglance-source-language'] || 'auto',
-                        isDarkMode: settings['wordglance-dark-mode'] || false,
-                        totalWordsLearned: settings['wordglance-total-words-learned'] || 0
-                    }
-                };
-                
-            case 'updateSettings':
-                await browser.storage.local.set(message.settings);
-                return { success: true };
-                
-            case 'clearCache':
-                cache.definitions.clear();
-                cache.translations.clear();
-                await browser.storage.local.set({
-                    'wordglance-cache-definitions': '{}',
-                    'wordglance-cache-translations': '{}',
-                    'wordglance-total-words-learned': 0
-                });
-                return { success: true };
-                
-            case 'getCacheInfo':
-                return {
-                    success: true,
-                    cacheInfo: {
-                        definitionsCount: cache.definitions.size,
-                        translationsCount: cache.translations.size
-                    }
-                };
-                
-            default:
-                return { success: false, error: 'Unknown action' };
+browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    (async () => {
+        try {
+            switch (message.action) {
+                case 'fetchDefinition':
+                    const definitionResult = await fetchDefinition(message.word);
+                    sendResponse({ success: true, data: definitionResult });
+                    break;
+                    
+                case 'fetchTranslation':
+                    const translationResult = await fetchTranslation(
+                        message.text, 
+                        message.sourceLanguage, 
+                        message.targetLanguage
+                    );
+                    sendResponse({ success: true, data: translationResult });
+                    break;
+                    
+                case 'incrementWordsLearned':
+                    const result = await browser.storage.local.get(['wordglance-total-words-learned']);
+                    const currentCount = result['wordglance-total-words-learned'] || 0;
+                    const newCount = currentCount + 1;
+                    await browser.storage.local.set({ 'wordglance-total-words-learned': newCount });
+                    sendResponse({ success: true, count: newCount });
+                    break;
+                    
+                case 'getSettings':
+                    const settings = await browser.storage.local.get([
+                        'wordglance-target-language',
+                        'wordglance-source-language', 
+                        'wordglance-dark-mode',
+                        'wordglance-total-words-learned'
+                    ]);
+                    sendResponse({
+                        success: true,
+                        settings: {
+                            targetLanguage: settings['wordglance-target-language'] || 'bn',
+                            sourceLanguage: settings['wordglance-source-language'] || 'auto',
+                            isDarkMode: settings['wordglance-dark-mode'] || false,
+                            totalWordsLearned: settings['wordglance-total-words-learned'] || 0
+                        }
+                    });
+                    break;
+                    
+                case 'updateSettings':
+                    await browser.storage.local.set(message.settings);
+                    sendResponse({ success: true });
+                    break;
+                    
+                case 'clearCache':
+                    cache.definitions.clear();
+                    cache.translations.clear();
+                    await browser.storage.local.set({
+                        'wordglance-cache-definitions': '{}',
+                        'wordglance-cache-translations': '{}',
+                        'wordglance-total-words-learned': 0
+                    });
+                    sendResponse({ success: true });
+                    break;
+                    
+                case 'getCacheInfo':
+                    sendResponse({
+                        success: true,
+                        cacheInfo: {
+                            definitionsCount: cache.definitions.size,
+                            translationsCount: cache.translations.size
+                        }
+                    });
+                    break;
+                    
+                default:
+                    sendResponse({ success: false, error: 'Unknown action' });
+            }
+        } catch (error) {
+            console.error('Background script error:', error);
+            sendResponse({ success: false, error: error.message || 'Unknown error' });
         }
-    } catch (error) {
-        console.error('Background script error:', error);
-        return { success: false, error: error.message };
-    }
+    })();
+    
+    // Return true to indicate we'll send response asynchronously
+    return true;
 });
 
 // Initialize cache on startup

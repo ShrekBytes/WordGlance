@@ -528,7 +528,11 @@
                 displayDefinitionData(defResponse.data);
                 
                 // Increment words learned counter
-                browser.runtime.sendMessage({ action: 'incrementWordsLearned' });
+                try {
+                    browser.runtime.sendMessage({ action: 'incrementWordsLearned' });
+                } catch (error) {
+                    console.log('Failed to increment counter:', error);
+                }
             } else {
                 displayDefinitionError('Definition not found');
             }
