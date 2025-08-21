@@ -27,7 +27,7 @@ Install **Violentmonkey** (recommended, it's free!):
 - **ScriptCat**: [Chrome](https://chrome.google.com/webstore/detail/scriptcat/ndcooeababalnlpkfedmmbbbgkljhpjf) | [Firefox](https://addons.mozilla.org/firefox/addon/scriptcat/) | [Edge](https://microsoftedge.microsoft.com/addons/detail/scriptcat/liilgpjgabokdklappibcjfablkpcekh)
 
 ### Step 2: Install WordGlance
-**Option 1 (Recommended):** [Install from GreasyFork](https://greasyfork.org/scripts/wordglance) *(link will be updated)*
+**Option 1 (Recommended):** [Install from GreasyFork](https://greasyfork.org/scripts/wordglance)
 
 **Option 2:** [Install directly](https://github.com/ShrekBytes/WordGlance/raw/main/wordglance.user.js)
 
@@ -119,6 +119,15 @@ A: No, it needs internet to fetch definitions and translations from online APIs.
 **Q: Can I suggest new features?**  
 A: Yes! [Open a feature request](https://github.com/ShrekBytes/WordGlance/issues) on GitHub.
 
+**Q: Will there be a browser extension version?**  
+A: No plans for a browser extension! Userscripts are actually better because they're:
+- **⚡ Lighter & Faster** - No bloated extension overhead
+- **🌐 Cross-platform** - Works on Chrome, Firefox, Safari, Edge with the same code
+- **🔧 Easy to manage** - Update instantly, customize easily, no store approval delays
+- **🔒 More secure** - You can inspect the code, no hidden tracking
+- **📱 Universal** - One script works everywhere instead of separate extensions
+
+---
 
 **Don't see your question here?** [Open an issue](https://github.com/ShrekBytes/WordGlance/issues) and we'll help you out!
 
