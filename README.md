@@ -2,9 +2,9 @@
 
 Get instant dictionary definitions and translations for any text on any website! Just select text and click the book icon.
 
-[<img src="https://img.shields.io/badge/Install-GreasyFork-orange.svg" width="150" alt="Install from GreasyFork">](https://greasyfork.org/scripts/wordglance)
-[<img src="https://img.shields.io/badge/Install-Direct-blue.svg" width="150" alt="Install Direct">](https://github.com/ShrekBytes/WordGlance/raw/main/wordglance.user.js)
-[<img src="https://img.shields.io/badge/version-1.0.0-green.svg" width="150" alt="Version">](https://github.com/ShrekBytes/WordGlance)
+[![Install from GreasyFork](https://img.shields.io/badge/Install-GreasyFork-orange.svg?style=for-the-badge)](https://greasyfork.org/scripts/wordglance)
+[![Install Direct](https://img.shields.io/badge/Install-Direct-blue.svg?style=for-the-badge)](https://github.com/ShrekBytes/WordGlance/raw/main/wordglance.user.js)
+[![Version](https://img.shields.io/badge/version-1.0.0-green.svg?style=for-the-badge)](https://github.com/ShrekBytes/WordGlance)
 
 <img src="/screenshots/dark.png" width="600" alt="WordGlance Screenshot">
 
