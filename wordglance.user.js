@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WordGlance - Dictionary & Translation Tooltip
 // @namespace    https://github.com/ShrekBytes
-// @version      1.0.0
+// @version      1.1.0
 // @description  Show instant dictionary definitions and translations for selected text with any language support
 // @author       ShrekBytes
 // @icon         https://github.com/ShrekBytes/WordGlance/raw/main/icon.png
@@ -25,7 +25,6 @@
 
     // Configuration - Easy to modify
     const CONFIG = {
-        debounceTime: 150, // milliseconds to wait before making API calls (reduced for faster response)
         tooltipZIndex: 999999,
         maxDefinitions: 9, // Maximum number of definitions to show (3 pages × 3 per page)
         maxTranslations: 8, // Maximum number of translations to show (2 pages × 4 per page)
@@ -967,7 +966,6 @@
     let tooltip = null;
     let triggerIcon = null;
     let settingsMenu = null;
-    let debounceTimeout = null;
     let resizeTimeout = null; // Add missing variable
     let currentSelection = '';
     let selectionRange = null;
@@ -2220,15 +2218,10 @@
         });
     }
 
-    // Handle text selection with debouncing
+    // Handle text selection
     function handleSelection() {
         const selection = window.getSelection();
         const selectedText = selection.toString().trim();
-        
-        // Clear existing timeout
-        if (debounceTimeout) {
-            clearTimeout(debounceTimeout);
-        }
         
         if (selectedText && selectedText !== currentSelection && 
             selectedText.length > 0 && selectedText.length < 100 &&
@@ -2254,11 +2247,6 @@
                     console.log('Error positioning trigger icon:', e);
                 }
             }
-            
-            // Still debounce for other potential actions if needed
-            debounceTimeout = setTimeout(() => {
-                // Any additional debounced actions can go here
-            }, CONFIG.debounceTime);
         } else if (!selectedText) {
             currentSelection = '';
             selectionRange = null;
@@ -2313,10 +2301,6 @@
         cancelActiveRequests();
         
         // Clear timeouts
-        if (debounceTimeout) {
-            clearTimeout(debounceTimeout);
-            debounceTimeout = null;
-        }
         if (resizeTimeout) {
             clearTimeout(resizeTimeout);
             resizeTimeout = null;

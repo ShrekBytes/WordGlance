@@ -139,7 +139,6 @@ A: No, it needs internet to fetch definitions and translations from online APIs.
 Modify the `CONFIG` object for advanced customization:
 ```javascript
 const CONFIG = {
-    debounceTime: 150,        // API call delay (ms)
     maxDefinitions: 9,        // Max definitions to show  
     maxTranslations: 8,       // Max translations to show
     cacheSize: 100,          // Cache size limit
