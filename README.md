@@ -58,9 +58,9 @@ Install **Violentmonkey** (recommended, it's free!):
 3. **Browse results** - Use arrows to see more definitions/translations
 4. **Adjust settings** - Right-click your userscript manager icon → WordGlance Settings
 
-![button](/screenshots/button.png)
-![light](/screenshots/light.png)
-![dark](/screenshots/dark.png)
+<img src="/screenshots/button.png" width="666" alt="WordGlance Button">
+<img src="/screenshots/light.png" width="666" alt="WordGlance Light Mode">
+<img src="/screenshots/dark.png" width="666" alt="WordGlance Dark Mode">
 
 ### 💡 Tips
 - Works best with **single words** for definitions
@@ -75,8 +75,8 @@ Click the settings gear to customize:
 - **🌍 Languages** - Choose source and target languages
 - **🗂️ Cache** - Clear stored data if needed
 
-<img src="/screenshots/settings_dark.png" width="400" alt="Settings Dark Mode">
-<img src="/screenshots/settings_light.png" width="400" alt="Settings Light Mode">
+<img src="/screenshots/settings_dark.png" width="666" alt="Settings Dark Mode">
+<img src="/screenshots/settings_light.png" width="666" alt="Settings Light Mode">
 
 ### Popular language combinations:
 - English → Spanish (`en` → `es`)
