@@ -165,6 +165,7 @@ Found a bug? Want a feature? [Open an issue](https://github.com/ShrekBytes/WordG
 
 Open source under [GPL-3.0 License](LICENSE)
 
+##
 
 > **💡 Why not a browser extension and will there be one in the future?**
 > 
