@@ -122,12 +122,7 @@ A: Click your userscript manager icon → Toggle WordGlance off/on.
 **Q: Does it work offline?**  
 A: No, it needs internet to fetch definitions and translations from online APIs.
 
-**Q: Can I suggest new features?**  
-A: Yes! [Open a feature request](https://github.com/ShrekBytes/WordGlance/issues) on GitHub.
-
----
-
-**Don't see your question here?** [Open an issue](https://github.com/ShrekBytes/WordGlance/issues) and we'll help you out!
+**Have a question, suggestion, or found a bug?** [Open an issue](https://github.com/ShrekBytes/WordGlance/issues) on GitHub and we'll help you out!
 
 
 ## 👨‍💻 For developers
