@@ -1,166 +1,171 @@
-# WordGlance - Dictionary & Translation Tooltip 📖
+# WordGlance 📖
 
-Get instant dictionary definitions and translations for any text on any website! Available as both a **userscript** and **Firefox extension**.
+Get instant dictionary definitions and translations for any text on any website! Just select text and click the book icon.
 
-![WordGlance Dark Mode](https://github.com/ShrekBytes/WordGlance/raw/main/screenshots/dark.png)
+> Want extension of this script? - [WordGlance Firefox Extension](placeholder) 
 
-## ✨ Features
 
-- 📖 **Instant Definitions**: Get dictionary definitions with examples, synonyms, and antonyms
-- 🌍 **Multi-language Translation**: Translate between 40+ languages instantly  
-- 🎨 **Dark/Light Mode**: Beautiful interface with seamless dark mode support
-- 📱 **Mobile Friendly**: Optimized for touch devices and responsive design
-- 💾 **Smart Caching**: LRU cache for faster repeated lookups
-- 📊 **Usage Statistics**: Track your learning progress
-- ⚡ **Performance Optimized**: Efficient architecture for smooth experience
-- 🔄 **Pagination**: Navigate through multiple definitions and translations
+[![Install Userscript](https://img.shields.io/badge/Install%20Userscript-WordGlance-blue?style=for-the-badge&logo=userscript)](https://raw.githubusercontent.com/ShrekBytes/WordGlance/main/wordglance.user.js)
+[![View on GreasyFork](https://img.shields.io/badge/View%20on-GreasyFork-4E9A06?style=for-the-badge&logo=greasyfork)](https://greasyfork.org/en/scripts/546617-wordglance-dictionary-translation-tooltip)
 
-![WordGlance Button](https://github.com/ShrekBytes/WordGlance/raw/main/screenshots/button.png)
-![WordGlance Light Mode](https://github.com/ShrekBytes/WordGlance/raw/main/screenshots/light.png)
+![WordGlance Screenshot](/screenshots/dark.png)
 
-## 🚀 Quick Start
+## 📋 Table of Contents
 
-### Option 1: Firefox Extension (Recommended)
-- **Better Performance**: Shared cache across tabs, 90% less memory usage
-- **Easy Installation**: One-click install from Firefox Add-ons Store
-- **Auto Updates**: Automatic updates through Firefox
+- [✨ What it does](#-what-it-does)
+- [🚀 How to install](#-how-to-install)
+- [📱 How to use](#-how-to-use)
+- [⚙️ Settings](#️-settings)
+- [🌍 Supported languages](#-supported-languages)
+- [❓ Common questions](#-common-questions)
+- [👨‍💻 For developers](#-for-developers)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
 
-### Option 2: Userscript (Universal)
-- **Cross-Browser**: Works on Chrome, Firefox, Safari, Edge
-- **Instant Updates**: Get updates immediately
-- **Easy Installation**: Works with Tampermonkey, Greasemonkey, etc.
+## ✨ What it does
 
-## 📦 Installation
+- **📚 Dictionary**: Get definitions, examples, synonyms and antonyms
+- **🌍 Translation**: Translate to 40+ languages instantly  
+- **⚡ Fast**: Smart caching for instant results
+- **🎨 Beautiful**: Clean interface with dark mode
+- **📱 Mobile-friendly**: Optimized for both desktop and mobile devices
+- **🔧 Customizable**: Choose your languages and preferences
 
-### Firefox Extension
+## 🚀 How to install
 
-#### Firefox Add-ons Store (Coming Soon)
-1. Visit [Firefox Add-ons Store](https://addons.mozilla.org) 
-2. Search for "WordGlance"
-3. Click "Add to Firefox"
+### Step 1: Get a userscript manager
+Install **Violentmonkey** (recommended, it's free!):
+- [Chrome](https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag) 
+- [Firefox](https://addons.mozilla.org/firefox/addon/violentmonkey/)
+- [Edge](https://microsoftedge.microsoft.com/addons/detail/violentmonkey/eeagobfjdenkkddmbclomhiblgggliao)
 
-#### Manual Installation (Developer)
-1. Download or clone this repository
-2. Open Firefox and go to `about:debugging`
-3. Click "This Firefox" → "Load Temporary Add-on"
-4. Select the `manifest.json` file from this directory
-5. Extension will be loaded and ready to use
+**Alternative options:**
+- **Tampermonkey**: [Chrome](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) | [Firefox](https://addons.mozilla.org/firefox/addon/tampermonkey/) | [Safari](https://apps.apple.com/app/tampermonkey/id1482490089) | [Edge](https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd)
+- **ScriptCat**: [Chrome](https://chrome.google.com/webstore/detail/scriptcat/ndcooeababalnlpkfedmmbbbgkljhpjf) | [Firefox](https://addons.mozilla.org/firefox/addon/scriptcat/) | [Edge](https://microsoftedge.microsoft.com/addons/detail/scriptcat/liilgpjgabokdklappibcjfablkpcekh)
 
-### Userscript Installation
+### Step 2: Install WordGlance
+**Option 1 (Recommended):** [Install from GreasyFork](https://greasyfork.org/en/scripts/546617-wordglance-dictionary-translation-tooltip)
 
-#### From GreasyFork (Recommended)
-1. Install a userscript manager:
-   - **Chrome/Edge**: [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)
-   - **Firefox**: [Tampermonkey](https://addons.mozilla.org/firefox/addon/tampermonkey/) or [Greasemonkey](https://addons.mozilla.org/firefox/addon/greasemonkey/)
-   - **Safari**: [Tampermonkey](https://apps.apple.com/app/tampermonkey/id1482490089)
+**Option 2:** [Install directly](https://github.com/ShrekBytes/WordGlance/raw/main/wordglance.user.js)
 
-2. [Install WordGlance from GreasyFork](https://greasyfork.org/scripts/wordglance)
+### Step 3: Test it!
+1. Go to any website
+2. Select some text 
+3. Click the 📖 icon that appears
+4. Enjoy instant definitions and translations!
 
-#### Manual Installation
-1. Install a userscript manager (see above)
-2. Click here: [Install wordglance.user.js](https://github.com/ShrekBytes/WordGlance/raw/main/wordglance.user.js)
-3. Confirm installation in your userscript manager
+## 📱 How to use
 
-## 🎯 How to Use
+### Desktop & Mobile
+1. **Select text** - Highlight any word or phrase (double-tap on mobile, or long-press and drag)
+2. **Click the 📖 icon** - It appears near your selection  
+3. **Browse results** - Use arrows to see more definitions/translations
+4. **Adjust settings** - Right-click your userscript manager icon → WordGlance Settings
 
-1. **Select Text**: Highlight any word or phrase on any webpage
-2. **Click Icon**: Click the 📖 icon that appears near your selection
-3. **View Results**: See definitions and translations in an elegant tooltip
-4. **Navigate**: Use arrow controls to browse through multiple results
-5. **Settings**: 
-   - **Extension**: Click the extension icon in Firefox toolbar
-   - **Userscript**: Right-click userscript manager → WordGlance Settings
+<img src="/screenshots/button.png" width="666" alt="WordGlance Button">
+<img src="/screenshots/light.png" width="666" alt="WordGlance Light Mode">
+<img src="/screenshots/dark.png" width="666" alt="WordGlance Dark Mode">
+
+### 💡 Tips
+- **Desktop**: Works with mouse selection, keyboard shortcuts, and double-click
+- **Mobile**: Double-tap to select words, or long-press and drag for phrases
+- Works best with **single words** for definitions
+- Great at **short phrases** for translations  
+- Supports **40+ languages** including Spanish, French, German, Chinese, Japanese, Arabic, and more
 
 ## ⚙️ Settings
 
-![WordGlance Settings](https://github.com/ShrekBytes/WordGlance/raw/main/screenshots/settings_light.png)
+Click the settings gear to customize:
 
-Customize WordGlance to your preferences:
+- **🌙 Dark Mode** - Easy on the eyes for night browsing
+- **🌍 Languages** - Choose source and target languages
+- **🗂️ Cache** - Clear stored data if needed
 
-- **🌙 Dark Mode**: Toggle between light and dark themes
-- **🌍 Source Language**: Set the language to translate from (auto-detect recommended)
-- **🎯 Target Language**: Set your preferred translation language  
-- **🗂️ Cache Management**: View cache statistics and clear stored data
-- **📊 Usage Statistics**: See how many words you've learned
+<img src="/screenshots/settings_dark.png" width="666" alt="Settings Dark Mode">
+<img src="/screenshots/settings_light.png" width="666" alt="Settings Light Mode">
 
-**Access Settings:**
-- **Firefox Extension**: Click the WordGlance icon in the Firefox toolbar
-- **Userscript**: Right-click your userscript manager icon → "WordGlance Settings"
+### Popular language combinations:
+- English → Spanish (`en` → `es`)
+- English → French (`en` → `fr`) 
+- Auto-detect → Chinese (`auto` → `zh`)
+- Any language → English (`auto` → `en`)
 
-## 🌍 Supported Languages
+## 🌍 Supported languages
 
-**Source Languages**: Auto-detect, English, Bengali, Spanish, French, German, Italian, Portuguese, Russian, Japanese, Korean, Chinese, Arabic, Hindi, Turkish, Dutch, Swedish, Danish, Norwegian, Finnish, Polish, Czech, Slovak, Hungarian, Romanian, Bulgarian, Croatian, Serbian, Slovenian, Estonian, Latvian, Lithuanian, Ukrainian, Greek, Hebrew, Thai, Vietnamese, Indonesian, Malay, Filipino, Swahili, Amharic, Zulu
+**Major languages:** Arabic, Bengali, Chinese, English, French, German, Hindi, Italian, Japanese, Korean, Portuguese, Russian, Spanish
 
-**Target Languages**: All of the above except auto-detect
+**All 40+ languages (A-Z):** Amharic, Arabic, Bengali, Bulgarian, Chinese, Croatian, Czech, Danish, Dutch, English, Estonian, Filipino, Finnish, French, German, Greek, Hebrew, Hindi, Hungarian, Indonesian, Italian, Japanese, Korean, Latvian, Lithuanian, Malay, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swahili, Swedish, Thai, Turkish, Ukrainian, Vietnamese, Zulu
 
-## ️ Privacy & Security
+## ❓ Common questions
 
-- **🔒 No Data Collection**: WordGlance doesn't collect or store personal data
-- **💾 Local Storage**: All settings and cache data are stored locally on your device
-- **🌐 API Calls**: Only selected text is sent to translation/definition APIs
-- **🚫 No Tracking**: No analytics, tracking, or telemetry implemented
-- **🔐 Secure**: All API requests use HTTPS and have timeout protection
+**Q: Is it free?**  
+A: Yes! Completely free and no ads.
 
-## ️ Development
+**Q: Do I need to create an account?**  
+A: Nope! Works instantly after installation.
 
-### Firefox Extension Development
+**Q: Does it work on mobile?**  
+A: Yes! Works flawlessly on both desktop and mobile devices.
 
-1. **Local Development**:
-   ```bash
-   # Load extension in Firefox
-   # 1. Go to about:debugging
-   # 2. Click "This Firefox" → "Load Temporary Add-on"
-   # 3. Select manifest.json
-   ```
+**Q: Is my data safe?**  
+A: Yes! Everything stays in your browser. No data is sent to us, and the script is open source so you can inspect the code if you want to verify.
 
-2. **Using web-ext (Recommended)**:
-   ```bash
-   npm install -g web-ext
-   web-ext run          # Run in new Firefox instance
-   web-ext build        # Build for distribution
-   web-ext lint         # Lint extension code
-   ```
+**Q: Why isn't it working?**  
+A: Make sure your userscript manager (Violentmonkey/Tampermonkey) is installed and enabled and the script is also enabled. Try refreshing the page.
 
-3. **Build for Firefox Add-ons Store**:
-   ```bash
-   web-ext build --overwrite-dest
-   # Creates distribution package in web-ext-artifacts/
-   ```
+**Q: The translation seems wrong?**  
+A: Try using "Auto-detect" for source language, or select specific languages in settings.
 
-### Userscript Development
+**Q: Does it work on all websites?**  
+A: Yes! WordGlance works on any website where you can select text.
 
-1. **Edit** `wordglance.user.js`
-2. **Reload** in your userscript manager
-3. **Test** on various websites
+**Q: How do I change the target language?**  
+A: Right-click your userscript manager icon → WordGlance Settings → Choose your language.
 
-## 🎯 Browser Compatibility
+**Q: Why do some words show "No definition found"?**  
+A: Very new words, slang, or technical terms might not be in the dictionary. Try synonyms or simpler terms.
 
-| Browser | Extension | Userscript |
-|---------|-----------|------------|
-| **Firefox Desktop** | ✅ Native | ✅ Tampermonkey/Greasemonkey |
-| **Firefox Mobile** | ✅ Native | ✅ Tampermonkey |
-| **Chrome Desktop** | ❌ | ✅ Tampermonkey |
-| **Chrome Mobile** | ❌ | ✅ Kiwi Browser + Tampermonkey |
-| **Safari Desktop** | ❌ | ✅ Tampermonkey |
-| **Safari Mobile** | ❌ | ✅ UserScripts |
-| **Edge Desktop** | ❌ | ✅ Tampermonkey |
+**Q: Does it slow down my browser?**  
+A: No! WordGlance is lightweight and only activates when you select text.
 
-##  License
+**Q: Can I translate entire sentences?**  
+A: Yes, but it works best with 1-5 words. For longer text, use dedicated translation tools.
 
-GPL-3.0 License - See [LICENSE](LICENSE) file for details
+**Q: How do I disable it temporarily?**  
+A: Click your userscript manager icon → Toggle WordGlance off/on.
 
-## 🙏 Credits & Acknowledgments
+**Q: Does it work offline?**  
+A: No, it needs internet to fetch definitions and translations from online APIs.
 
-**Created by**: [ShrekBytes](https://github.com/ShrekBytes) 
+**Have a question, suggestion, or found a bug?** [Open an issue](https://github.com/ShrekBytes/WordGlance/issues) on GitHub and we'll help you out!
 
-**Special Thanks**:
-- [Dictionary API](https://dictionaryapi.dev/) - Free English dictionary service
-- [Free Translate API](https://ftapi.pythonanywhere.com/) - Multi-language translation service
-- Mozilla Firefox team for excellent extension APIs
-- Userscript community for Tampermonkey/Greasemonkey support
 
----
+## 👨‍💻 For developers
 
-**💖 Love WordGlance?** 
+### Configuration
+Modify the `CONFIG` object for advanced customization:
+```javascript
+const CONFIG = {
+    maxDefinitions: 9,        // Max definitions to show  
+    maxTranslations: 8,       // Max translations to show
+    cacheSize: 100,          // Cache size limit
+    apiTimeout: 10000        // Request timeout (ms)
+};
+```
 
-Give it a ⭐ **star** on [GitHub](https://github.com/ShrekBytes/WordGlance) and share it with friends who love learning languages!
+### APIs used
+- **Dictionary**: [Dictionary API](https://dictionaryapi.dev/) - Free English dictionary
+- **Translation**: [Free Translate API](https://ftapi.pythonanywhere.com/) - Multi-language translation
+
+*Special thanks to these amazing free APIs that make WordGlance possible!*
+
+## 🤝 Contributing
+
+Found a bug? Want a feature? [Open an issue](https://github.com/ShrekBytes/WordGlance/issues) or submit a pull request!
+
+
+*Love WordGlance? Give it a ⭐ star on GitHub!*
+
+## 📄 License
+
+Open source under [GPL-3.0 License](LICENSE)
