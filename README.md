@@ -78,7 +78,7 @@ A: Yes! Completely free and no ads.
 A: Nope! Works instantly after installation.
 
 **Q: Does it work on mobile?**  
-A: Designed for desktop browsers. Mobile support depends on your browser.
+A: Yes it works flawlessly on both desktop and mobile.
 
 **Q: Is my data safe?**  
 A: Yes! Everything stays in your browser. No data is sent to us.
@@ -119,11 +119,9 @@ A: No, it needs internet to fetch definitions and translations from online APIs.
 **Q: Can I suggest new features?**  
 A: Yes! [Open a feature request](https://github.com/ShrekBytes/WordGlance/issues) on GitHub.
 
----
 
 **Don't see your question here?** [Open an issue](https://github.com/ShrekBytes/WordGlance/issues) and we'll help you out!
 
----
 
 ## 👨‍💻 For developers
 
@@ -143,23 +141,16 @@ const CONFIG = {
 - **Dictionary**: [Dictionary API](https://dictionaryapi.dev/) - Free English dictionary
 - **Translation**: [Free Translate API](https://ftapi.pythonanywhere.com/) - Multi-language translation
 
-*Special thanks to these amazing free APIs that make WordGlance possible! 🙏*
+*Special thanks to these amazing free APIs that make WordGlance possible!*
 
-### Contributing
-1. Fork the repo
-2. Make your changes
-3. Test thoroughly  
-4. Submit a pull request
+## Contributing
 
-### Issues & Support
 Found a bug? Want a feature? [Open an issue](https://github.com/ShrekBytes/WordGlance/issues) or submit a pull request!
 
 ## 📄 License
 
-Open source under [GPL-3.0 License](LICENSE). Free to use, modify, and share!
+Open source under [GPL-3.0 License](LICENSE)
 
----
-
-**Made with ❤️ by [ShrekBytes](https://github.com/ShrekBytes)**
+##
 
 *Love WordGlance? Give it a ⭐ star on GitHub!*
