@@ -160,11 +160,6 @@ const CONFIG = {
 
 Found a bug? Want a feature? [Open an issue](https://github.com/ShrekBytes/WordGlance/issues) or submit a pull request!
 
-
-## 📄 License
-
-Open source under [GPL-3.0 License](LICENSE)
-
 ##
 
 > **💡 Why not a browser extension and will there be one in the future?**
@@ -177,3 +172,7 @@ Open source under [GPL-3.0 License](LICENSE)
 > - **📱 Universal** - One script works everywhere instead of separate extensions
 
 *Love WordGlance? Give it a ⭐ star on GitHub!*
+
+## 📄 License
+
+Open source under [GPL-3.0 License](LICENSE)
