@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WordGlance - Dictionary & Translation Tooltip
 // @namespace    https://github.com/ShrekBytes
-// @version      1.0.0
+// @version      2.1.0
 // @description  Show instant dictionary definitions and translations for selected text with any language support
 // @author       ShrekBytes
 // @icon         https://github.com/ShrekBytes/WordGlance/raw/main/icon.png
