@@ -142,12 +142,12 @@
 
     // Standardized error messages system
     const ERROR_MESSAGES = {
-        NO_DEFINITION: 'No definition found',
-        NO_TRANSLATION: 'No translation found',
-        NETWORK_ERROR: 'Network error - please check your connection',
+        NO_DEFINITION: 'Definition not found',
+        NO_TRANSLATION: 'Translation not available',
+        NETWORK_ERROR: 'Connection error - please try again',
         API_TIMEOUT: 'Request timed out - please try again',
-        PARSE_ERROR: 'Failed to process response',
-        INVALID_INPUT: 'Invalid text selection',
+        PARSE_ERROR: 'Unable to process response',
+        INVALID_INPUT: 'Please select a valid word or phrase',
         LANGUAGE_ERROR: 'Language not supported'
     };
 
@@ -1815,8 +1815,11 @@
                     activeRequests.delete(requestId);
                     
                     try {
-                        if (response.status !== 200) {
-                            reject(createErrorMessage('NETWORK_ERROR', `HTTP ${response.status}`));
+                        if (response.status === 404) {
+                            reject(createErrorMessage('NO_DEFINITION'));
+                            return;
+                        } else if (response.status !== 200) {
+                            reject(createErrorMessage('NETWORK_ERROR'));
                             return;
                         }
                         
@@ -1885,12 +1888,12 @@
                         
                         resolve(result);
                     } catch (e) {
+                        console.log('Definition parsing error:', e);
                         reject(createErrorMessage('PARSE_ERROR'));
                     }
                 },
                 onerror: function(error) {
                     activeRequests.delete(requestId);
-                    console.log('Definition API request failed:', error);
                     reject(createErrorMessage('NETWORK_ERROR'));
                 },
                 ontimeout: function() {
@@ -1932,8 +1935,11 @@
                     activeRequests.delete(requestId);
                     
                     try {
-                        if (response.status !== 200) {
-                            reject(createErrorMessage('NETWORK_ERROR', `HTTP ${response.status}`));
+                        if (response.status === 404) {
+                            reject(createErrorMessage('NO_TRANSLATION'));
+                            return;
+                        } else if (response.status !== 200) {
+                            reject(createErrorMessage('NETWORK_ERROR'));
                             return;
                         }
                         
@@ -1990,15 +1996,20 @@
                             
                             resolve(result);
                         } else {
-                            reject(createErrorMessage('NO_TRANSLATION'));
+                            // Check if it's a language detection issue
+                            if (data && data.error && data.error.includes('language')) {
+                                reject(createErrorMessage('LANGUAGE_ERROR'));
+                            } else {
+                                reject(createErrorMessage('NO_TRANSLATION'));
+                            }
                         }
                     } catch (e) {
+                        console.log('Translation parsing error:', e);
                         reject(createErrorMessage('PARSE_ERROR'));
                     }
                 },
                 onerror: function(error) {
                     activeRequests.delete(requestId);
-                    console.log('Translation API request failed:', error);
                     reject(createErrorMessage('NETWORK_ERROR'));
                 },
                 ontimeout: function() {
@@ -2355,7 +2366,7 @@
     // Enhanced input sanitization function
     function sanitizeAndValidateText(text) {
         if (!text || typeof text !== 'string') {
-            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT', 'Empty or invalid text') };
+            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT') };
         }
         
         // Basic sanitization
@@ -2367,32 +2378,32 @@
         
         // Length validation
         if (sanitized.length === 0) {
-            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT', 'Text contains only invalid characters') };
+            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT') };
         }
         
         if (sanitized.length > 100) {
-            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT', 'Text too long (max 100 characters)') };
+            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT') };
         }
         
         // Word count validation
         const words = sanitized.split(/\s+/).filter(word => word.length > 0);
         if (words.length > 5) {
-            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT', 'Too many words (max 5 words)') };
+            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT') };
         }
         
         // Content validation - allow Unicode letters, spaces, hyphens, apostrophes, dots, and common accented characters
         if (!/^[\p{L}\s\-'\.]+$/u.test(sanitized)) {
-            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT', 'Text contains unsupported characters') };
+            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT') };
         }
         
         // Exclude pure numbers
         if (/^\d+$/.test(sanitized)) {
-            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT', 'Numbers only are not supported') };
+            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT') };
         }
         
         // Exclude pure punctuation
         if (/^[^\p{L}]+$/u.test(sanitized)) {
-            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT', 'Punctuation only is not supported') };
+            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT') };
         }
         
         return { valid: true, sanitized: sanitized, error: null };
