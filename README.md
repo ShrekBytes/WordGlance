@@ -6,7 +6,7 @@ Get instant dictionary definitions and translations for any text on any website!
 [![Install Direct](https://img.shields.io/badge/Install-Direct-blue.svg?style=for-the-badge)](https://github.com/ShrekBytes/WordGlance/raw/main/wordglance.user.js)
 [![Version](https://img.shields.io/badge/version-1.0.0-green.svg?style=for-the-badge)](https://github.com/ShrekBytes/WordGlance)
 
-<img src="/screenshots/dark.png" width="600" alt="WordGlance Screenshot">
+![WordGlance Screenshot](/screenshots/dark.png)
 
 ## 📋 Table of Contents
 
