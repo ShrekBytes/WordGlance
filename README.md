@@ -1,216 +1,140 @@
 # WordGlance
 
-Instant dictionary definitions + translations anywhere you select text on the web.
+Simple pop‑up meanings and translations for any word you highlight on the web.
 
-Select a word (or up to 5 words), click the floating 📖 icon, and a sleek tooltip slides in with:
-- Paginated definitions (with part of speech & example sentences)
-- Synonyms & antonyms (when available)
-- Fast multi-translation grid (2×2 pages)
-- Smart caching & dark mode
-- One‑click language switching (auto-detect supported for source language)
+Highlight. Click 📖. Read. Switch language. Done.
 
 <p align="center"><img src="icon.png" alt="WordGlance icon" width="96"/></p>
 
 ---
 
 ## Table of Contents
-1. [Features](#features)
-2. [Live Demo (How It Works)](#live-demo-how-it-works)
-3. [Installation](#installation)
-4. [How to Use](#how-to-use)
-5. [APIs Used](#apis-used)
-6. [Language Switching](#language-switching)
-7. [Caching & Performance](#caching--performance)
-8. [Configuration (Advanced)](#configuration-advanced)
-9. [Privacy Notes](#privacy-notes)
-10. [Troubleshooting / FAQ](#troubleshooting--faq)
-11. [Contributing](#contributing)
-12. [License](#license)
+1. [What It Does](#what-it-does)
+2. [Install](#install)
+3. [Quick Use](#quick-use)
+4. [The Settings Menu](#the-settings-menu)
+5. [Change Languages](#change-languages)
+6. [Dark Mode](#dark-mode)
+7. [Where Meanings & Translations Come From](#where-meanings--translations-come-from)
+8. [FAQ](#faq)
+9. [Advanced (Optional)](#advanced-optional)
+10. [Privacy](#privacy)
+11. [License](#license)
 
 ---
 
-## Features
-- Universal: Works on (almost) any webpage (`*://*/*`).
-- Lightweight UI: Floating trigger icon ➜ animated tooltip.
-- Smooth Pagination: Definitions (3 per page), translations (2×2 grid pages).
-- Synonyms & Antonyms: Auto-collected and de‑duplicated.
-- Dark Mode: Toggle in the settings panel.
-- Language Auto‑Detect: Source can be `auto` for smart translation.
-- Multi‑Word Support: Up to 5 words per selection; filters out pure numbers / punctuation.
-- Caching Layer: LRU caching of definitions + per language pair translations.
-- Resilient: Request race cancellation & timeout handling.
-- No external frameworks – pure userscript.
+## What It Does
+WordGlance adds a tiny floating 📖 button whenever you select a word or short phrase (up to 5 words). Click it to see:
+* Clean definition pages (with examples when available)
+* Quick translation tiles (can be multiple pages)
+* Synonyms & antonyms (if found)
+* Smooth animations + dark mode
+
+You stay on the page—no new tabs, no clutter.
 
 ---
 
-## Live Demo (How It Works)
-1. Select a word or small phrase on any page.
-2. A small blue (or coral in dark mode) circular 📖 icon appears near the selection.
-3. Click it: Tooltip animates in with two sections:
-   - Definitions (with pagination controls ‹ ›)
-   - Translations (grid; multiple pages if more results)
-4. Synonyms / antonyms appear below when available.
-5. Use the Tampermonkey/Greasemonkey menu command: `⚙️ WordGlance Settings` to open the settings panel.
+## Install
+1. Install a userscript manager:
+   * Chrome / Edge: Tampermonkey
+   * Firefox: Tampermonkey or Violentmonkey
+   * Safari: Tampermonkey
+2. Click the raw script link to install:
+   https://github.com/ShrekBytes/WordGlance/raw/main/wordglance.user.js
+3. Approve it. Reload a page. Highlight a word.
+
+That’s it.
 
 ---
 
-## Installation
-1. Install a userscript manager (choose one):
-   - Chrome / Edge: [Tampermonkey](https://www.tampermonkey.net/)
-   - Firefox: Tampermonkey or Violentmonkey
-   - Safari: Tampermonkey (App Store)
-2. Click this raw install link: 
-   - https://github.com/ShrekBytes/WordGlance/raw/main/wordglance.user.js
-3. Confirm install in your userscript manager.
-4. Reload any open pages and start selecting text.
+## Quick Use
+1. Select a word (or short phrase).
+2. A circular 📖 button appears right nearby.
+3. Click it: a compact panel fades in.
+4. Switch pages of definitions / translations with the little ‹ › arrows.
+5. Press Esc or click outside to close.
+
+Tip: If nothing appears, make sure the selection isn’t only numbers or punctuation.
 
 ---
 
-## How to Use
-- Select text (word or short phrase).
-- Click the appearing 📖 icon.
-- Navigate pages with ‹ › buttons.
-- Open settings via the userscript manager’s menu ➜ `⚙️ WordGlance Settings`.
-- Change languages / toggle dark mode / clear cache.
-- Press `Esc` to close tooltip or settings.
+## The Settings Menu
+Open it through your userscript manager menu: `⚙️ WordGlance Settings`.
 
-Keyboard Focus: The script is designed not to interfere with normal selection or typing.
+Inside you can:
+* Change FROM (source) language (or leave on Auto)
+* Change TO (target) language
+* Toggle Dark Mode
+* Clear the internal cache (frees space / refreshes results)
 
----
-
-## APIs Used
-| Type | API | Endpoint Pattern | Notes |
-|------|-----|------------------|-------|
-| Dictionary | Free Dictionary API | `https://api.dictionaryapi.dev/api/v2/entries/en/{word}` | English definitions only (currently). |
-| Translation | Free Translate API | `https://ftapi.pythonanywhere.com/translate?dl={target}&text={text}&sl={source?}` | Supports `sl` (source) omitted when auto-detect. |
-
-All requests are client-side; no proxy or backend.
+Everything saves automatically.
 
 ---
 
-## Language Switching
-Accessible via the in‑app settings panel.
+## Change Languages
+In the settings panel you’ll see two dropdowns:
+* From Language – choose a language or leave on Auto‑detect
+* To Language – your translation target (must be a real language, not Auto)
 
-Source ("From") Language:
-- May be set to `Auto-detect` (code: `auto`).
-- When set to `auto`, the translation API attempts to infer the source language.
+Supported examples: en, bn, es, fr, de, it, pt, ru, ja, ko, zh, ar, hi, tr, nl, sv, da, no, fi, pl, cs, sk, hu, ro, bg, hr, sr, sl, et, lv, lt, uk, el, he, th, vi, id, ms, tl, sw, am, zu
 
-Target ("To") Language:
-- Must be one of the defined target language codes (see list below).
-
-Supported Codes (subset):
-`en, bn, es, fr, de, it, pt, ru, ja, ko, zh, ar, hi, tr, nl, sv, da, no, fi, pl, cs, sk, hu, ro, bg, hr, sr, sl, et, lv, lt, uk, el, he, th, vi, id, ms, tl, sw, am, zu`
-
-Persistence:
-- Choices are stored via `GM_setValue` under keys:
-  - `wordglance-source-language`
-  - `wordglance-target-language`
-
-Programmatic Change (advanced):
-Inside `wordglance.user.js`, initial values are loaded here:
-```js
-let targetLanguage = GM_getValue('wordglance-target-language', 'bn');
-let sourceLanguage = GM_getValue('wordglance-source-language', 'auto');
-```
-Change the fallback defaults (`'bn'`, `'auto'`) before installation if you want a different initial pairing globally.
+You can change these any time—future lookups will use the new pair.
 
 ---
 
-## Caching & Performance
-- Two separate LRU-like maps for definitions and translations (size limit: 100 entries by default).
-- Key format (translations): `{text}-{source}-{target}`.
-- Eviction: Oldest entry removed when exceed size.
-- Stored to userscript storage (`GM_setValue`) using JSON snapshots.
-- Clearing: Use the `Clear` button in settings.
+## Dark Mode
+Click the Dark Mode toggle in settings. The panel + button restyle instantly. Your choice is remembered.
 
 ---
 
-## Configuration (Advanced)
-At top of the script:
-```js
-const CONFIG = {
-  debounceTime: 150,
-  tooltipZIndex: 999999,
-  maxDefinitions: 9,
-  maxTranslations: 8,
-  definitionsPerPage: 3,
-  translationsPerPage: 4,
-  maxSynonyms: 6,
-  maxAntonyms: 6,
-  cacheSize: 100,
-  apiTimeout: 10000
-};
-```
-You can fork and adjust values (e.g., increase `cacheSize`, lower `apiTimeout`, change pagination sizes). Keep totals small to avoid layout jumps.
+## Where Meanings & Translations Come From
+* Meanings: Free Dictionary API (English entries)
+* Translations: Free Translate API (auto‑detect supported)
+
+No login, no API keys needed.
 
 ---
 
-## Privacy Notes
-- Only the selected text is sent to the translation API (and the dictionary API for English words).
-- No analytics, tracking pixels, or third-party storage.
-- Everything else (UI state, cache) stays local in userscript storage.
+## FAQ
+**The 📖 icon didn’t show up**  
+The selection may be too long, empty, only numbers, or blocked by a special viewer (like an embedded PDF). Try plain text on a normal site.
+
+**Definitions missing but translation works**  
+The dictionary API only gives English definitions. Non‑English words may still translate.
+
+**“No translation found”**  
+Try a simpler root form or fewer words.
+
+**How do I clear old results?**  
+Open settings ➜ Clear (Cache section).
+
+**Can I use the keyboard instead of clicking?**  
+Not yet. A shortcut is planned—feel free to request it.
+
+**Does it slow pages down?**  
+It stays idle until you select text. Results are cached to reduce repeat calls.
+
+**Dark mode automatic?**  
+Currently manual. Toggle lives in settings.
+
+**Want it inside iframes?**  
+By default it skips them. Advanced users can remove the `@noframes` line in the script.
 
 ---
 
-## Troubleshooting / FAQ
-**Q: The 📖 icon doesn’t appear.**  
-A: Ensure you actually selected text (drag or double-click). Some embedded apps (e.g., PDFs in iframes) block selection events. Try on a plain article page.
-
-**Q: Can I translate longer sentences?**  
-A: The script currently limits to 5 words and < 100 chars for speed and signal quality. You can adjust validation logic inside `handleSelection()` if you fork it.
-
-**Q: How do I switch languages?**  
-A: Open the userscript manager menu ➜ `⚙️ WordGlance Settings` ➜ choose From / To languages from searchable dropdowns.
-
-**Q: Why are definitions only English?**  
-A: The Free Dictionary API endpoint used is English-specific. For multilingual definitions, a future enhancement could select different dictionary sources based on language.
-
-**Q: What if translation says “No translation found”?**  
-A: The API returned no usable `destination-text`. Try selecting fewer words or a simpler form.
-
-**Q: How do I clear cached results?**  
-A: Open settings ➜ click `Clear` in the Cache section.
-
-**Q: Does it run inside iframes?**  
-A: The script uses `@noframes`, so it avoids iframe clutter by design. Remove the `@noframes` directive if you want inner-frame behavior.
-
-**Q: How do I disable on a specific site?**  
-A: In Tampermonkey: Dashboard ➜ select the script ➜ Settings ➜ add the site to Excludes. Or fork and refine `@match` patterns.
-
-**Q: Can I map a hotkey instead of clicking the icon?**  
-A: Not yet. A keyboard activation (e.g., Alt+D) is a reasonable enhancement—PRs welcome.
-
-**Q: How is dark mode decided?**  
-A: Manual toggle stored under `wordglance-dark-mode`. Automatic detection could be added using `matchMedia`—see Issues to request it.
+## Advanced (Optional)
+Curious or tweaking? Near the top of `wordglance.user.js` there’s a small config block (limits, timeouts, page sizes). Most users never need to touch it.
 
 ---
 
-## Contributing
-1. Fork the repo.
-2. Make focused changes (keep style minimal & dependency‑free).
-3. Test on a few pages (news site, documentation, blog).
-4. Open a PR describing:
-   - What changed & why
-   - Screenshots/GIF if UI related
-5. Keep functions small & comment only where non-obvious.
-
-Ideas / Roadmap:
-- Keyboard shortcut activation
-- Multi-dictionary support per language
-- Offline fallback / local wordlist
-- Copy button for translations
-- Pronunciation audio
+## Privacy
+Only the text you highlight is sent to the public APIs for meaning / translation. No analytics. Cache + preferences stay in your browser’s userscript storage.
 
 ---
 
 ## License
-Distributed under the GPL-3.0 License. See [`LICENSE`](LICENSE).
+GPL‑3.0 – see the [`LICENSE`](LICENSE) file.
 
 ---
 
-## Attribution / Credit
-Created by [ShrekBytes](https://github.com/ShrekBytes). Open to improvements—feel free to file Issues or PRs.
-
----
-
-Happy reading ✨
+Made with care by [ShrekBytes](https://github.com/ShrekBytes). Enjoy faster reading ✨
