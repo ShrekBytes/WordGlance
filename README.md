@@ -97,8 +97,11 @@ A: Yes! Completely free and no ads.
 **Q: Do I need to create an account?**  
 A: Nope! Works instantly after installation.
 
+<!-- **Q: Does it work on mobile?**  
+A: Yes it works flawlessly on both desktop and mobile. -->
+
 **Q: Does it work on mobile?**  
-A: Yes it works flawlessly on both desktop and mobile.
+A: Currently does not work on mobile but it will be in the  future.
 
 **Q: Is my data safe?**  
 A: Yes! Everything stays in your browser. No data is sent to us, and the script is open source so you can inspect the code if you want to verify.
