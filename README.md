@@ -75,8 +75,8 @@ Click the settings gear to customize:
 - **🌍 Languages** - Choose source and target languages
 - **🗂️ Cache** - Clear stored data if needed
 
-![settings dark](/screenshots/settings_dark.png)
-![settings dark](/screenshots/settings_light.png)
+<img src="/screenshots/settings_dark.png" width="400" alt="Settings Dark Mode">
+<img src="/screenshots/settings_light.png" width="400" alt="Settings Light Mode">
 
 ### Popular language combinations:
 - English → Spanish (`en` → `es`)
