@@ -17,11 +17,14 @@ Get instant dictionary definitions and translations for any text on any website!
 ## 🚀 How to install
 
 ### Step 1: Get a userscript manager
-Install **Tampermonkey** (it's free!):
-- [Chrome](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) 
-- [Firefox](https://addons.mozilla.org/firefox/addon/tampermonkey/)
-- [Safari](https://apps.apple.com/app/tampermonkey/id1482490089)
-- [Edge](https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd)
+Install **Violentmonkey** (recommended, it's free!):
+- [Chrome](https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag) 
+- [Firefox](https://addons.mozilla.org/firefox/addon/violentmonkey/)
+- [Edge](https://microsoftedge.microsoft.com/addons/detail/violentmonkey/eeagobfjdenkkddmbclomhiblgggliao)
+
+**Alternative options:**
+- **Tampermonkey**: [Chrome](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) | [Firefox](https://addons.mozilla.org/firefox/addon/tampermonkey/) | [Safari](https://apps.apple.com/app/tampermonkey/id1482490089) | [Edge](https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd)
+- **ScriptCat**: [Chrome](https://chrome.google.com/webstore/detail/scriptcat/ndcooeababalnlpkfedmmbbbgkljhpjf) | [Firefox](https://addons.mozilla.org/firefox/addon/scriptcat/) | [Edge](https://microsoftedge.microsoft.com/addons/detail/scriptcat/liilgpjgabokdklappibcjfablkpcekh)
 
 ### Step 2: Install WordGlance
 **Option 1 (Recommended):** [Install from GreasyFork](https://greasyfork.org/scripts/wordglance) *(link will be updated)*
@@ -39,7 +42,7 @@ Install **Tampermonkey** (it's free!):
 1. **Select text** - Highlight any word or phrase
 2. **Click the 📖 icon** - It appears near your selection  
 3. **Browse results** - Use arrows to see more definitions/translations
-4. **Adjust settings** - Right-click Tampermonkey icon → WordGlance Settings
+4. **Adjust settings** - Right-click your userscript manager icon → WordGlance Settings
 
 ### 💡 Tips
 - Works best with **single words** for definitions
@@ -62,9 +65,9 @@ Click the settings gear to customize:
 
 ## 🌍 Supported languages
 
-**Major languages:** English, Spanish, French, German, Italian, Portuguese, Russian, Chinese, Japanese, Korean, Arabic, Hindi, Bengali
+**Major languages:** Arabic, Bengali, Chinese, English, French, German, Hindi, Italian, Japanese, Korean, Portuguese, Russian, Spanish
 
-**All 40+ languages:** English, Spanish, French, German, Italian, Portuguese, Russian, Dutch, Swedish, Danish, Norwegian, Finnish, Polish, Czech, Slovak, Hungarian, Romanian, Bulgarian, Croatian, Serbian, Slovenian, Estonian, Latvian, Lithuanian, Ukrainian, Greek, Hebrew, Japanese, Korean, Chinese, Arabic, Hindi, Bengali, Turkish, Thai, Vietnamese, Indonesian, Malay, Filipino, Swahili, Amharic, Zulu
+**All 40+ languages (A-Z):** Amharic, Arabic, Bengali, Bulgarian, Chinese, Croatian, Czech, Danish, Dutch, English, Estonian, Filipino, Finnish, French, German, Greek, Hebrew, Hindi, Hungarian, Indonesian, Italian, Japanese, Korean, Latvian, Lithuanian, Malay, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swahili, Swedish, Thai, Turkish, Ukrainian, Vietnamese, Zulu
 
 ## ❓ Common questions
 
@@ -81,13 +84,44 @@ A: Designed for desktop browsers. Mobile support depends on your browser.
 A: Yes! Everything stays in your browser. No data is sent to us.
 
 **Q: Why isn't it working?**  
-A: Make sure Tampermonkey is installed and enabled. Try refreshing the page.
+A: Make sure your userscript manager (Violentmonkey/Tampermonkey) is installed and enabled. Try refreshing the page.
 
 **Q: Can I customize it?**  
-A: Yes! Access settings through Tampermonkey or modify the code directly.
+A: Yes! Access settings through your userscript manager or modify the code directly.
 
 **Q: The translation seems wrong?**  
 A: Try using "Auto-detect" for source language, or select specific languages in settings.
+
+**Q: Does it work on all websites?**  
+A: Yes! WordGlance works on any website where you can select text.
+
+**Q: How do I change the target language?**  
+A: Right-click your userscript manager icon → WordGlance Settings → Choose your language.
+
+**Q: Can I use it for learning languages?**  
+A: Absolutely! It's great for reading foreign websites and learning new vocabulary.
+
+**Q: Why do some words show "No definition found"?**  
+A: Very new words, slang, or technical terms might not be in the dictionary. Try synonyms or simpler terms.
+
+**Q: Does it slow down my browser?**  
+A: No! WordGlance is lightweight and only activates when you select text.
+
+**Q: Can I translate entire sentences?**  
+A: Yes, but it works best with 1-5 words. For longer text, use dedicated translation tools.
+
+**Q: How do I disable it temporarily?**  
+A: Click your userscript manager icon → Toggle WordGlance off/on.
+
+**Q: Does it work offline?**  
+A: No, it needs internet to fetch definitions and translations from online APIs.
+
+**Q: Can I suggest new features?**  
+A: Yes! [Open a feature request](https://github.com/ShrekBytes/WordGlance/issues) on GitHub.
+
+---
+
+**Don't see your question here?** [Open an issue](https://github.com/ShrekBytes/WordGlance/issues) and we'll help you out!
 
 ---
 
@@ -108,6 +142,8 @@ const CONFIG = {
 ### APIs used
 - **Dictionary**: [Dictionary API](https://dictionaryapi.dev/) - Free English dictionary
 - **Translation**: [Free Translate API](https://ftapi.pythonanywhere.com/) - Multi-language translation
+
+*Special thanks to these amazing free APIs that make WordGlance possible! 🙏*
 
 ### Contributing
 1. Fork the repo
