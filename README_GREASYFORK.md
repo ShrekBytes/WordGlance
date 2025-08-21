@@ -2,6 +2,8 @@
 
 Get instant dictionary definitions and translations for any text on any website! Just select text and click the book icon.
 
+![WordGlance Dark Mode Popup](https://github.com/ShrekBytes/WordGlance/raw/main/screenshots/dark.png)
+
 ## ✨ What it does
 
 - **📚 Dictionary**: Get definitions, examples, synonyms and antonyms
@@ -17,8 +19,7 @@ Get instant dictionary definitions and translations for any text on any website!
 3. **Browse results** - Use arrows to see more definitions/translations
 4. **Adjust settings** - Right-click your userscript manager icon → WordGlance Settings
 
-![WordGlance Dark Mode Popup](https://github.com/ShrekBytes/WordGlance/raw/main/screenshots/dark.png)
-
+![WordGlance Button](https://github.com/ShrekBytes/WordGlance/raw/main/screenshots/button.png)
 ![WordGlance Light Mode Popup](https://github.com/ShrekBytes/WordGlance/raw/main/screenshots/light.png)
 
 ## ⚙️ Settings
