@@ -119,14 +119,6 @@ A: No, it needs internet to fetch definitions and translations from online APIs.
 **Q: Can I suggest new features?**  
 A: Yes! [Open a feature request](https://github.com/ShrekBytes/WordGlance/issues) on GitHub.
 
-**Q: Will there be a browser extension version?**  
-A: No plans for a browser extension! Userscripts are actually better because they're:
-- **⚡ Lighter & Faster** - No bloated extension overhead
-- **🌐 Cross-platform** - Works on Chrome, Firefox, Safari, Edge with the same code
-- **🔧 Easy to manage** - Update instantly, customize easily, no store approval delays
-- **🔒 More secure** - You can inspect the code, no hidden tracking
-- **📱 Universal** - One script works everywhere instead of separate extensions
-
 ---
 
 **Don't see your question here?** [Open an issue](https://github.com/ShrekBytes/WordGlance/issues) and we'll help you out!
@@ -155,6 +147,17 @@ const CONFIG = {
 ## Contributing
 
 Found a bug? Want a feature? [Open an issue](https://github.com/ShrekBytes/WordGlance/issues) or submit a pull request!
+
+---
+
+> **💡 Why not a browser extension?**
+> 
+> WordGlance is intentionally built as a userscript because userscripts are simply better:
+> - **⚡ Lighter & Faster** - No bloated extension overhead
+> - **🌐 Cross-platform** - Works on Chrome, Firefox, Safari, Edge with the same code
+> - **🔧 Easy to manage** - Update instantly, customize easily, no store approval delays
+> - **🔒 More secure** - You can inspect the code, no hidden tracking
+> - **📱 Universal** - One script works everywhere instead of separate extensions
 
 ## 📄 License
 
