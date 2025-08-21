@@ -2,9 +2,8 @@
 
 Get instant dictionary definitions and translations for any text on any website! Just select text and click the book icon.
 
-[![Install from GreasyFork](https://img.shields.io/badge/Install-GreasyFork-orange.svg?style=for-the-badge)](https://greasyfork.org/en/scripts/546617-wordglance-dictionary-translation-tooltip)
-[![Install Direct](https://img.shields.io/badge/Install-Direct-blue.svg?style=for-the-badge)](https://github.com/ShrekBytes/WordGlance/raw/main/wordglance.user.js)
-[![Version](https://img.shields.io/badge/version-1.0.0-green.svg?style=for-the-badge)](https://github.com/ShrekBytes/WordGlance)
+[![Install Userscript](https://img.shields.io/badge/Install%20Userscript-WordGlance-blue?style=for-the-badge&logo=userscript)](https://raw.githubusercontent.com/ShrekBytes/WordGlance/main/wordglance.user.js)
+[![View on GreasyFork](https://img.shields.io/badge/View%20on-GreasyFork-4E9A06?style=for-the-badge&logo=greasyfork)](https://greasyfork.org/en/scripts/546617-wordglance-dictionary-translation-tooltip)
 
 ![WordGlance Screenshot](/screenshots/dark.png)
 
