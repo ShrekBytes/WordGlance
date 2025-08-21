@@ -6,6 +6,8 @@ Get instant dictionary definitions and translations for any text on any website!
 [![Install Direct](https://img.shields.io/badge/Install-Direct-blue.svg)](https://github.com/ShrekBytes/WordGlance/raw/main/wordglance.user.js)
 [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/ShrekBytes/WordGlance)
 
+![sample](/screenshots/dark.png)
+
 ## 📋 Table of Contents
 
 - [✨ What it does](#-what-it-does)
@@ -56,6 +58,10 @@ Install **Violentmonkey** (recommended, it's free!):
 3. **Browse results** - Use arrows to see more definitions/translations
 4. **Adjust settings** - Right-click your userscript manager icon → WordGlance Settings
 
+![button](/screenshots/button.png)
+![light](/screenshots/light.png)
+![dark](/screenshots/dark.png)
+
 ### 💡 Tips
 - Works best with **single words** for definitions
 - Great for **short phrases** for translations  
@@ -68,6 +74,9 @@ Click the settings gear to customize:
 - **🌙 Dark Mode** - Easy on the eyes for night browsing
 - **🌍 Languages** - Choose source and target languages
 - **🗂️ Cache** - Clear stored data if needed
+
+![settings dark](/screenshots/settings_dark.png)
+![settings dark](/screenshots/settings_light.png)
 
 ### Popular language combinations:
 - English → Spanish (`en` → `es`)
