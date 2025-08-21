@@ -148,7 +148,12 @@ const CONFIG = {
 
 Found a bug? Want a feature? [Open an issue](https://github.com/ShrekBytes/WordGlance/issues) or submit a pull request!
 
----
+
+## 📄 License
+
+Open source under [GPL-3.0 License](LICENSE)
+
+##
 
 > **💡 Why not a browser extension?**
 > 
@@ -158,10 +163,6 @@ Found a bug? Want a feature? [Open an issue](https://github.com/ShrekBytes/WordG
 > - **🔧 Easy to manage** - Update instantly, customize easily, no store approval delays
 > - **🔒 More secure** - You can inspect the code, no hidden tracking
 > - **📱 Universal** - One script works everywhere instead of separate extensions
-
-## 📄 License
-
-Open source under [GPL-3.0 License](LICENSE)
 
 ##
 
