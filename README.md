@@ -6,6 +6,18 @@ Get instant dictionary definitions and translations for any text on any website!
 [![Install Direct](https://img.shields.io/badge/Install-Direct-blue.svg)](https://github.com/ShrekBytes/WordGlance/raw/main/wordglance.user.js)
 [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/ShrekBytes/WordGlance)
 
+## 📋 Table of Contents
+
+- [✨ What it does](#-what-it-does)
+- [🚀 How to install](#-how-to-install)
+- [📱 How to use](#-how-to-use)
+- [⚙️ Settings](#️-settings)
+- [🌍 Supported languages](#-supported-languages)
+- [❓ Common questions](#-common-questions)
+- [👨‍💻 For developers](#-for-developers)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+
 ## ✨ What it does
 
 - **📚 Dictionary**: Get definitions, examples, synonyms and antonyms
@@ -144,7 +156,7 @@ const CONFIG = {
 
 *Special thanks to these amazing free APIs that make WordGlance possible!*
 
-## Contributing
+## 🤝 Contributing
 
 Found a bug? Want a feature? [Open an issue](https://github.com/ShrekBytes/WordGlance/issues) or submit a pull request!
 
@@ -153,17 +165,14 @@ Found a bug? Want a feature? [Open an issue](https://github.com/ShrekBytes/WordG
 
 Open source under [GPL-3.0 License](LICENSE)
 
-##
 
-> **💡 Why not a browser extension?**
+> **💡 Why not a browser extension and will there be one in the future?**
 > 
-> WordGlance is intentionally built as a userscript because userscripts are simply better:
+> **No, there will never be a browser extension version.** WordGlance is intentionally built as a userscript because userscripts are simply better:
 > - **⚡ Lighter & Faster** - No bloated extension overhead
 > - **🌐 Cross-platform** - Works on Chrome, Firefox, Safari, Edge with the same code
 > - **🔧 Easy to manage** - Update instantly, customize easily, no store approval delays
 > - **🔒 More secure** - You can inspect the code, no hidden tracking
 > - **📱 Universal** - One script works everywhere instead of separate extensions
-
-##
 
 *Love WordGlance? Give it a ⭐ star on GitHub!*
