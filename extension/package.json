@@ -1,0 +1,28 @@
+{
+  "name": "wordglance-firefox-extension",
+  "version": "2.1.5",
+  "description": "WordGlance Firefox Extension - Dictionary & Translation Tooltip",
+  "scripts": {
+    "build": "web-ext build --source-dir=. --artifacts-dir=dist --overwrite-dest",
+    "start": "web-ext run --source-dir=.",
+    "lint": "web-ext lint --source-dir=."
+  },
+  "keywords": [
+    "firefox",
+    "extension",
+    "dictionary",
+    "translation",
+    "tooltip",
+    "language"
+  ],
+  "author": "ShrekBytes",
+  "license": "GPL-3.0",
+  "homepage": "https://github.com/ShrekBytes/WordGlance",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ShrekBytes/WordGlance.git"
+  },
+  "devDependencies": {
+    "web-ext": "^7.0.0"
+  }
+}

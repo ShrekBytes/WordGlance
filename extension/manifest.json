@@ -1,0 +1,60 @@
+{
+  "manifest_version": 2,
+  "name": "WordGlance - Dictionary & Translation Tooltip",
+  "version": "2.1.5",
+  "description": "Show instant dictionary definitions and translations for selected text with any language support",
+  "author": "ShrekBytes",
+  
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png",
+    "128": "icons/icon-128.png"
+  },
+  
+  "permissions": [
+    "storage",
+    "activeTab",
+    "<all_urls>",
+    "https://api.dictionaryapi.dev/*",
+    "https://ftapi.pythonanywhere.com/*"
+  ],
+  
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  
+  "browser_action": {
+    "default_title": "WordGlance Settings",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  },
+  
+  "web_accessible_resources": [
+    "icons/*"
+  ],
+  
+  "homepage_url": "https://github.com/ShrekBytes/WordGlance",
+  
+  "applications": {
+    "gecko": {
+      "id": "wordglance@shrekbytes.github.io",
+      "strict_min_version": "57.0"
+    }
+  }
+}
