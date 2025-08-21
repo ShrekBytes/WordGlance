@@ -26,7 +26,7 @@ Get instant dictionary definitions and translations for any text on any website!
 - **⚡ Fast**: Smart caching for instant results
 - **🎨 Beautiful**: Clean interface with dark mode
 - **📱 Mobile-friendly**: Optimized for both desktop and mobile devices
-- ** 🔧 Customizable**: Choose your languages and preferences
+- **🔧 Customizable**: Choose your languages and preferences
 
 ## 🚀 How to install
 
@@ -66,9 +66,8 @@ Install **Violentmonkey** (recommended, it's free!):
 ### 💡 Tips
 - **Desktop**: Works with mouse selection, keyboard shortcuts, and double-click
 - **Mobile**: Double-tap to select words, or long-press and drag for phrases
-- **Smart positioning**: Button appears below text on mobile to avoid conflicts with copy/paste menu
 - Works best with **single words** for definitions
-- Great for **short phrases** for translations  
+- Great at **short phrases** for translations  
 - Supports **40+ languages** including Spanish, French, German, Chinese, Japanese, Arabic, and more
 
 ## ⚙️ Settings
@@ -103,7 +102,7 @@ A: Yes! Completely free and no ads.
 A: Nope! Works instantly after installation.
 
 **Q: Does it work on mobile?**  
-A: Yes! Works flawlessly on both desktop and mobile devices. Mobile features include larger touch-friendly buttons and smart positioning to avoid conflicts with native copy/paste menus.
+A: Yes! Works flawlessly on both desktop and mobile devices.
 
 **Q: Is my data safe?**  
 A: Yes! Everything stays in your browser. No data is sent to us, and the script is open source so you can inspect the code if you want to verify.
