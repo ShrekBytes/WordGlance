@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WordGlance - Dictionary & Translation Tooltip
 // @namespace    https://github.com/ShrekBytes
-// @version      2.0.0
+// @version      1.0.0
 // @description  Show instant dictionary definitions and translations for selected text with any language support
 // @author       ShrekBytes
 // @icon         https://github.com/ShrekBytes/WordGlance/raw/main/icon.png
@@ -139,6 +139,23 @@
 
     // Initialize cache
     loadCache();
+
+    // Standardized error messages system
+    const ERROR_MESSAGES = {
+        NO_DEFINITION: 'No definition found',
+        NO_TRANSLATION: 'No translation found',
+        NETWORK_ERROR: 'Network error - please check your connection',
+        API_TIMEOUT: 'Request timed out - please try again',
+        PARSE_ERROR: 'Failed to process response',
+        INVALID_INPUT: 'Invalid text selection',
+        LANGUAGE_ERROR: 'Language not supported'
+    };
+
+    // Helper function to create standardized error display
+    function createErrorMessage(errorType, details = '') {
+        const baseMessage = ERROR_MESSAGES[errorType] || 'Unknown error';
+        return details ? `${baseMessage}: ${details}` : baseMessage;
+    }
 
     // Centralized language definitions to avoid duplication
     const LANGUAGES = {
@@ -594,10 +611,6 @@
             padding: 8px 0;
         }
 
-        .wordglance-settings.dark-mode .setting-item {
-            /* Dark mode styling without border */
-        }
-
         .wordglance-settings .setting-item:last-child {
             margin-bottom: 0;
         }
@@ -914,7 +927,55 @@
             height: 16px;
             vertical-align: middle;
         }
+
+        /* Usage Statistics Styles */
+        .wordglance-settings .usage-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid #3498db;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #3498db;
+            font-weight: bold;
+            margin: 0 auto;
+        }
+
+        .wordglance-settings.dark-mode .usage-circle {
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .wordglance-settings .usage-number {
+            font-size: 24px;
+            line-height: 1;
+        }
+
+        .wordglance-settings .usage-label {
+            font-size: 10px;
+            text-transform: lowercase;
+            letter-spacing: 0.3px;
+            margin-top: 4px;
+        }
     `);
+
+    // Usage statistics tracking
+    let totalWordsLearned = GM_getValue('wordglance-total-words-learned', 0);
+
+    // Function to increment word learned counter
+    function incrementWordsLearned() {
+        totalWordsLearned++;
+        GM_setValue('wordglance-total-words-learned', totalWordsLearned);
+        
+        // Update display if settings menu is open
+        const usageNumber = document.querySelector('.usage-number');
+        if (usageNumber) {
+            usageNumber.textContent = totalWordsLearned;
+        }
+    }
 
     // DOM element cache to reduce repeated queries
     let domCache = {
@@ -1043,6 +1104,13 @@
                         <div class="cache-info" id="cache-info">Loading...</div>
                     </div>
                     <button class="cache-button" id="clear-cache-btn">Clear</button>
+                </div>
+            </div>
+            
+            <div class="setting-section">
+                <div class="usage-circle">
+                    <div class="usage-number">${totalWordsLearned}</div>
+                    <div class="usage-label">words learned</div>
                 </div>
             </div>
             
@@ -1283,25 +1351,35 @@
         }
     }
 
+    // Centralized language validation function
+    function validateLanguageCode(languageCode, isSource = true) {
+        // Check if language code exists
+        if (!LANGUAGES[languageCode]) {
+            return { valid: false, error: `Invalid language code: ${languageCode}` };
+        }
+        
+        // Check auto-detect restrictions
+        if (!isSource && languageCode === 'auto') {
+            return { valid: false, error: 'Auto-detect not allowed for target language' };
+        }
+        
+        return { valid: true, error: null };
+    }
+
     // Consolidated language change function to reduce code duplication
     function changeLanguage(type, newLanguage) {
         const isSource = type === 'source';
         const currentLanguage = isSource ? sourceLanguage : targetLanguage;
         const languageKey = isSource ? 'wordglance-source-language' : 'wordglance-target-language';
         
-        // Validate language code exists
-        if (!LANGUAGES[newLanguage]) {
-            console.warn(`Invalid language code: ${newLanguage}`);
+        // Use centralized validation
+        const validation = validateLanguageCode(newLanguage, isSource);
+        if (!validation.valid) {
+            console.warn(validation.error);
             return;
         }
         
         if (currentLanguage === newLanguage) {
-            return;
-        }
-        
-        // Validate language selection
-        if (!isSource && newLanguage === 'auto') {
-            console.warn('Auto-detect not allowed for target language');
             return;
         }
         
@@ -1360,7 +1438,7 @@
             })
             .catch(error => {
                 console.warn('Translation reload failed:', error);
-                translationSlider.innerHTML = '<div class="content-page"><span class="error">No translation found</span></div>';
+                translationSlider.innerHTML = `<div class="content-page"><span class="error">${error}</span></div>`;
                 translationPageHeights = [40];
                 currentTranslationPage = 0;
                 updateTranslationSlider(true);
@@ -1410,12 +1488,22 @@
     }
 
     function clearCacheWithConfirmation() {
-        const confirmed = confirm('Are you sure you want to clear all cached definitions and translations?\n\nThis action cannot be undone.');
+        const confirmed = confirm('Are you sure you want to clear all cached data and reset word counter?\n\nThis will delete:\n• All cached definitions and translations\n• Words learned counter\n\nThis action cannot be undone.');
         if (confirmed) {
             cache.definitions.clear();
             cache.translations.clear();
             GM_setValue('wordglance-cache-definitions', '{}');
             GM_setValue('wordglance-cache-translations', '{}');
+            
+            // Reset word counter
+            totalWordsLearned = 0;
+            GM_setValue('wordglance-total-words-learned', 0);
+            
+            // Update display if settings menu is open
+            const usageNumber = document.querySelector('.usage-number');
+            if (usageNumber) {
+                usageNumber.textContent = totalWordsLearned;
+            }
         }
     }
 
@@ -1728,19 +1816,19 @@
                     
                     try {
                         if (response.status !== 200) {
-                            reject(`HTTP Error: ${response.status}`);
+                            reject(createErrorMessage('NETWORK_ERROR', `HTTP ${response.status}`));
                             return;
                         }
                         
                         const data = JSON.parse(response.responseText);
                         if (!data || !Array.isArray(data) || data.length === 0) {
-                            reject('No definition found in response');
+                            reject(createErrorMessage('NO_DEFINITION'));
                             return;
                         }
                         
                         const entry = data[0];
                         if (!entry || !entry.meanings || !Array.isArray(entry.meanings) || entry.meanings.length === 0) {
-                            reject('No meanings found in dictionary entry');
+                            reject(createErrorMessage('NO_DEFINITION'));
                             return;
                         }
                         
@@ -1797,17 +1885,17 @@
                         
                         resolve(result);
                     } catch (e) {
-                        reject('Failed to parse definition');
+                        reject(createErrorMessage('PARSE_ERROR'));
                     }
                 },
                 onerror: function(error) {
                     activeRequests.delete(requestId);
                     console.log('Definition API request failed:', error);
-                    reject('Failed to fetch definition - network error');
+                    reject(createErrorMessage('NETWORK_ERROR'));
                 },
                 ontimeout: function() {
                     activeRequests.delete(requestId);
-                    reject('Definition request timed out');
+                    reject(createErrorMessage('API_TIMEOUT'));
                 },
                 timeout: CONFIG.apiTimeout
             });
@@ -1845,7 +1933,7 @@
                     
                     try {
                         if (response.status !== 200) {
-                            reject(`Translation API Error: ${response.status}`);
+                            reject(createErrorMessage('NETWORK_ERROR', `HTTP ${response.status}`));
                             return;
                         }
                         
@@ -1902,20 +1990,20 @@
                             
                             resolve(result);
                         } else {
-                            reject('No translation found');
+                            reject(createErrorMessage('NO_TRANSLATION'));
                         }
                     } catch (e) {
-                        reject('Failed to parse translation');
+                        reject(createErrorMessage('PARSE_ERROR'));
                     }
                 },
                 onerror: function(error) {
                     activeRequests.delete(requestId);
                     console.log('Translation API request failed:', error);
-                    reject('Failed to fetch translation - network error');
+                    reject(createErrorMessage('NETWORK_ERROR'));
                 },
                 ontimeout: function() {
                     activeRequests.delete(requestId);
-                    reject('Translation request timed out');
+                    reject(createErrorMessage('API_TIMEOUT'));
                 },
                 timeout: CONFIG.apiTimeout
             });
@@ -2023,7 +2111,6 @@
 
         // Fetch definition
         fetchDefinition(selectedText)
-        fetchDefinition(selectedText)
             .then(result => {
                 definitionData = result;
                 const definitionSlider = tooltip.querySelector('.definition-slider');
@@ -2087,6 +2174,9 @@
                     return measurePageHeight(page);
                 });
                 
+                // Track successful word lookup
+                incrementWordsLearned();
+                
                 // Smooth transition to final height with slight delay for better visual flow
                 updateDefinitionSlider(true);
                 
@@ -2097,7 +2187,7 @@
             })
             .catch(error => {
                 const definitionSlider = tooltip.querySelector('.definition-slider');
-                definitionSlider.innerHTML = '<div class="content-page"><span class="error">No definition found</span></div>';
+                definitionSlider.innerHTML = `<div class="content-page"><span class="error">${error}</span></div>`;
                 definitionPageHeights = [40]; // Fixed height for error state
                 updateDefinitionSlider(true);
                 
@@ -2157,7 +2247,7 @@
             })
             .catch(error => {
                 const translationSlider = tooltip.querySelector('.translation-slider');
-                translationSlider.innerHTML = '<div class="content-page"><span class="error">No translation found</span></div>';
+                translationSlider.innerHTML = `<div class="content-page"><span class="error">${error}</span></div>`;
                 translationPageHeights = [40]; // Fixed height for error state
                 updateTranslationSlider(true);
                 
@@ -2262,18 +2352,62 @@
         });
     }
 
+    // Enhanced input sanitization function
+    function sanitizeAndValidateText(text) {
+        if (!text || typeof text !== 'string') {
+            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT', 'Empty or invalid text') };
+        }
+        
+        // Basic sanitization
+        let sanitized = text.trim();
+        
+        // Remove dangerous characters and control characters
+        sanitized = sanitized.replace(/[\x00-\x1F\x7F-\x9F]/g, ''); // Remove control characters
+        sanitized = sanitized.replace(/[<>'"&]/g, ''); // Remove HTML special characters
+        
+        // Length validation
+        if (sanitized.length === 0) {
+            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT', 'Text contains only invalid characters') };
+        }
+        
+        if (sanitized.length > 100) {
+            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT', 'Text too long (max 100 characters)') };
+        }
+        
+        // Word count validation
+        const words = sanitized.split(/\s+/).filter(word => word.length > 0);
+        if (words.length > 5) {
+            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT', 'Too many words (max 5 words)') };
+        }
+        
+        // Content validation - allow Unicode letters, spaces, hyphens, apostrophes, dots, and common accented characters
+        if (!/^[\p{L}\s\-'\.]+$/u.test(sanitized)) {
+            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT', 'Text contains unsupported characters') };
+        }
+        
+        // Exclude pure numbers
+        if (/^\d+$/.test(sanitized)) {
+            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT', 'Numbers only are not supported') };
+        }
+        
+        // Exclude pure punctuation
+        if (/^[^\p{L}]+$/u.test(sanitized)) {
+            return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT', 'Punctuation only is not supported') };
+        }
+        
+        return { valid: true, sanitized: sanitized, error: null };
+    }
+
     // Handle text selection
     function handleSelection() {
         const selection = window.getSelection();
-        const selectedText = selection.toString().trim();
+        const selectedText = selection.toString();
         
-        if (selectedText && selectedText !== currentSelection && 
-            selectedText.length > 0 && selectedText.length < 100 &&
-            /^[\w\s\-'\.àáâäèéêëìíîïòóôöùúûüñç]+$/i.test(selectedText) && // Allow accented characters
-            selectedText.trim().split(/\s+/).length <= 5 && // Max 5 words
-            !/^\d+$/.test(selectedText) && // Exclude pure numbers
-            !/^[^\w\s]+$/.test(selectedText)) { // Exclude pure punctuation
-            currentSelection = selectedText;
+        // Enhanced input validation
+        const validation = sanitizeAndValidateText(selectedText);
+        
+        if (validation.valid && validation.sanitized !== currentSelection) {
+            currentSelection = validation.sanitized;
             
             // Store selection range for positioning
             if (selection.rangeCount > 0) {
@@ -2291,7 +2425,7 @@
                     console.log('Error positioning trigger icon:', e);
                 }
             }
-        } else if (!selectedText) {
+        } else if (!selectedText || !validation.valid) {
             currentSelection = '';
             selectionRange = null;
             hideTooltip();
