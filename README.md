@@ -25,8 +25,8 @@ Get instant dictionary definitions and translations for any text on any website!
 - **🌍 Translation**: Translate to 40+ languages instantly  
 - **⚡ Fast**: Smart caching for instant results
 - **🎨 Beautiful**: Clean interface with dark mode
-- **� Mobile-friendly**: Optimized for both desktop and mobile devices
-- **�🔧 Customizable**: Choose your languages and preferences
+- **📱 Mobile-friendly**: Optimized for both desktop and mobile devices
+- ** 🔧 Customizable**: Choose your languages and preferences
 
 ## 🚀 How to install
 
