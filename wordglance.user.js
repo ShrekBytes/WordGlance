@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WordGlance - Dictionary & Translation Tooltip
 // @namespace    https://github.com/ShrekBytes
-// @version      1.1.0
+// @version      2.0.0
 // @description  Show instant dictionary definitions and translations for selected text with any language support
 // @author       ShrekBytes
 // @icon         https://github.com/ShrekBytes/WordGlance/raw/main/icon.png
@@ -209,6 +209,16 @@
             opacity: 0;
             transform: scale(0.8);
             will-change: transform, opacity; /* Optimize for animations */
+        }
+        
+        /* Larger button for mobile devices */
+        @media (hover: none) and (pointer: coarse) {
+            .wordglance-trigger-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 16px;
+                box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+            }
         }
         
         .wordglance-trigger-icon.show {
@@ -1649,16 +1659,43 @@
         requestAnimationFrame(() => {
             const viewportWidth = window.innerWidth;
             const viewportHeight = window.innerHeight;
+            const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                           ('ontouchstart' in window) || 
+                           (navigator.maxTouchPoints > 0);
             
-            let left = x + 10;
-            let top = y - 30;
+            // Button size depends on device type
+            const buttonSize = isMobile ? 32 : 24;
+            const halfButton = buttonSize / 2;
             
-            // Adjust if icon goes off screen
-            if (left + 24 > viewportWidth) {
-                left = x - 34;
-            }
-            if (top < 0) {
-                top = y + 10;
+            let left, top;
+            
+            if (isMobile) {
+                // On mobile, position below selection to avoid native copy/paste popup
+                left = Math.max(10, Math.min(x - halfButton, viewportWidth - buttonSize - 10)); // Center horizontally, with bounds
+                top = y + 40; // Position below selection
+                
+                // If there's no room below, try to the right side
+                if (top + buttonSize > viewportHeight - 50) {
+                    left = Math.min(x + 20, viewportWidth - buttonSize - 10);
+                    top = Math.max(10, y - halfButton); // Center vertically with selection
+                    
+                    // If still no room, position to the left
+                    if (left + buttonSize > viewportWidth - 10) {
+                        left = Math.max(10, x - buttonSize - 20);
+                    }
+                }
+            } else {
+                // Desktop positioning (original logic)
+                left = x + 10;
+                top = y - 30;
+                
+                // Adjust if icon goes off screen
+                if (left + buttonSize > viewportWidth) {
+                    left = x - buttonSize - 10;
+                }
+                if (top < 0) {
+                    top = y + 10;
+                }
             }
             
             icon.style.left = left + window.scrollX + 'px';
@@ -2139,20 +2176,27 @@
             const viewportWidth = window.innerWidth;
             const viewportHeight = window.innerHeight;
             
+            // Add comfortable margins from screen edges
+            const margin = 20;
+            const maxWidth = viewportWidth - (margin * 2);
+            const maxHeight = viewportHeight - (margin * 2);
+            
             let left = x + 10;
             let top = y - rect.height - 10;
             
-            // Adjust if tooltip goes off screen
-            if (left + rect.width > viewportWidth) {
+            // Adjust if tooltip goes off screen horizontally
+            if (left + rect.width > viewportWidth - margin) {
                 left = x - rect.width - 10;
             }
-            if (top < 0) {
+            
+            // Adjust if tooltip goes off screen vertically
+            if (top < margin) {
                 top = y + 20;
             }
             
-            // Ensure tooltip doesn't go off-screen
-            left = Math.max(10, Math.min(left, viewportWidth - rect.width - 10));
-            top = Math.max(10, Math.min(top, viewportHeight - rect.height - 10));
+            // Ensure tooltip stays within comfortable bounds (not snapped to edges)
+            left = Math.max(margin, Math.min(left, viewportWidth - rect.width - margin));
+            top = Math.max(margin, Math.min(top, viewportHeight - rect.height - margin));
             
             tooltip.style.left = left + window.scrollX + 'px';
             tooltip.style.top = top + window.scrollY + 'px';
@@ -2258,6 +2302,20 @@
     // Event listeners
     document.addEventListener('mouseup', handleSelection);
     document.addEventListener('keyup', handleSelection);
+    
+    // Add mobile touch support
+    document.addEventListener('touchend', function(e) {
+        // Small delay to let selection stabilize on mobile
+        setTimeout(handleSelection, 100);
+    });
+    
+    // Handle selection changes (for mobile long-press selections)
+    document.addEventListener('selectionchange', function() {
+        // Only handle if this is likely a user-initiated selection
+        if (document.hasFocus()) {
+            setTimeout(handleSelection, 150);
+        }
+    });
     
     // Hide tooltip when clicking outside or pressing Esc
     document.addEventListener('click', function(e) {

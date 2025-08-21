@@ -25,7 +25,8 @@ Get instant dictionary definitions and translations for any text on any website!
 - **🌍 Translation**: Translate to 40+ languages instantly  
 - **⚡ Fast**: Smart caching for instant results
 - **🎨 Beautiful**: Clean interface with dark mode
-- **🔧 Customizable**: Choose your languages and preferences
+- **� Mobile-friendly**: Optimized for both desktop and mobile devices
+- **�🔧 Customizable**: Choose your languages and preferences
 
 ## 🚀 How to install
 
@@ -52,7 +53,8 @@ Install **Violentmonkey** (recommended, it's free!):
 
 ## 📱 How to use
 
-1. **Select text** - Highlight any word or phrase
+### Desktop & Mobile
+1. **Select text** - Highlight any word or phrase (double-tap on mobile, or long-press and drag)
 2. **Click the 📖 icon** - It appears near your selection  
 3. **Browse results** - Use arrows to see more definitions/translations
 4. **Adjust settings** - Right-click your userscript manager icon → WordGlance Settings
@@ -62,6 +64,9 @@ Install **Violentmonkey** (recommended, it's free!):
 <img src="/screenshots/dark.png" width="666" alt="WordGlance Dark Mode">
 
 ### 💡 Tips
+- **Desktop**: Works with mouse selection, keyboard shortcuts, and double-click
+- **Mobile**: Double-tap to select words, or long-press and drag for phrases
+- **Smart positioning**: Button appears below text on mobile to avoid conflicts with copy/paste menu
 - Works best with **single words** for definitions
 - Great for **short phrases** for translations  
 - Supports **40+ languages** including Spanish, French, German, Chinese, Japanese, Arabic, and more
@@ -97,11 +102,8 @@ A: Yes! Completely free and no ads.
 **Q: Do I need to create an account?**  
 A: Nope! Works instantly after installation.
 
-<!-- **Q: Does it work on mobile?**  
-A: Yes it works flawlessly on both desktop and mobile. -->
-
 **Q: Does it work on mobile?**  
-A: Currently does not work on mobile but it will be in the  future.
+A: Yes! Works flawlessly on both desktop and mobile devices. Mobile features include larger touch-friendly buttons and smart positioning to avoid conflicts with native copy/paste menus.
 
 **Q: Is my data safe?**  
 A: Yes! Everything stays in your browser. No data is sent to us, and the script is open source so you can inspect the code if you want to verify.
