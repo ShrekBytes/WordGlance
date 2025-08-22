@@ -40,7 +40,7 @@
     };
 
     // Load settings from userscript storage
-    let targetLanguage = GM_getValue('wordglance-target-language', 'bn');
+    let targetLanguage = GM_getValue('wordglance-target-language', 'en');
     let sourceLanguage = GM_getValue('wordglance-source-language', 'auto');
     let isDarkMode = GM_getValue('wordglance-dark-mode', false);
 
