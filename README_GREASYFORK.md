@@ -2,12 +2,15 @@
 
 Get instant dictionary definitions and translations for any text on any website! Just select text and click the book icon.
 
+
+> or get the [WordGlance Extension](https://github.com/ShrekBytes/wordglance-extension)
+
 ![WordGlance Dark Mode Popup](https://github.com/ShrekBytes/WordGlance/raw/main/screenshots/dark.png)
 
 ## ✨ What it does
 
 - **📚 Dictionary**: Get definitions, examples, synonyms and antonyms
-- **🌍 Translation**: Translate to 40+ languages instantly  
+- **🌍 Translation**: Translate to 40+ languages instantly
 - **⚡ Fast**: Smart caching for instant results
 - **🎨 Beautiful**: Clean interface with dark mode
 - **🔧 Customizable**: Choose your languages and preferences
@@ -15,7 +18,7 @@ Get instant dictionary definitions and translations for any text on any website!
 ## 🚀 How to use
 
 1. **Select text** - Highlight any word or phrase on any website
-2. **Click the 📖 icon** - It appears near your selection  
+2. **Click the 📖 icon** - It appears near your selection
 3. **Browse results** - Use arrows to see more definitions/translations
 4. **Adjust settings** - Right-click your userscript manager icon → WordGlance Settings
 
@@ -40,6 +43,7 @@ Access settings through your userscript manager to customize:
 
 ## 🔗 Links & Resources
 
+- **🦊 Firefox Extension**: [Install from Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/wordglance/)
 - **📱 Screenshots & Demo**: [View on GitHub](https://github.com/ShrekBytes/WordGlance)
 - **❓ Common Questions & FAQ**: [GitHub README](https://github.com/ShrekBytes/WordGlance/blob/main/README.md#-common-questions)
 - **🐛 Report Issues**: [GitHub Issues](https://github.com/ShrekBytes/WordGlance/issues)
@@ -48,11 +52,11 @@ Access settings through your userscript manager to customize:
 - **⭐ Source Code**: [GitHub Repository](https://github.com/ShrekBytes/WordGlance)
 
 **APIs used:**
+
 - **Dictionary**: [Dictionary API](https://dictionaryapi.dev/) - Free English dictionary
 - **Translation**: [Free Translate API](https://ftapi.pythonanywhere.com/) - Multi-language translation
 
-*Special thanks to these amazing free APIs that make WordGlance possible!*
-
+_Special thanks to these amazing free APIs that make WordGlance possible!_
 
 ---
 
