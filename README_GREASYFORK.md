@@ -2,7 +2,6 @@
 
 Get instant dictionary definitions and translations for any text on any website! Just select text and click the book icon.
 
-
 > or get the [WordGlance Extension](https://github.com/ShrekBytes/wordglance-extension)
 
 ![WordGlance Dark Mode Popup](https://github.com/ShrekBytes/WordGlance/raw/main/screenshots/dark.png)
