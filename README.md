@@ -4,8 +4,8 @@ Get instant dictionary definitions and translations for any text on any website!
 
 > Want extension of this script? - [WordGlance Firefox Extension](https://addons.mozilla.org/en-US/firefox/addon/wordglance/)
 
-[![Install Userscript](https://img.shields.io/badge/Install%20Userscript-WordGlance-blue?style=for-the-badge&logo=userscript)](https://raw.githubusercontent.com/ShrekBytes/WordGlance/main/wordglance.user.js)
-[![View on GreasyFork](https://img.shields.io/badge/View%20on-GreasyFork-4E9A06?style=for-the-badge&logo=greasyfork)](https://greasyfork.org/en/scripts/546617-wordglance-dictionary-translation-tooltip)
+![Extension Badge](assets/icon.png) [![GreasyFork](https://img.shields.io/badge/GreasyFork-Userscript-4E9A06?style=for-the-badge&logo=greasyfork)](https://greasyfork.org/en/scripts/546617-wordglance-dictionary-translation-tooltip)
+[![Firefox](https://img.shields.io/badge/Firefox-Add--on-orange?style=for-the-badge&logo=firefox)](https://addons.mozilla.org/firefox/addon/wordglance/)
 
 ![WordGlance Screenshot](/screenshots/dark.png)
 
