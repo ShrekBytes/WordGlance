@@ -33,7 +33,10 @@
         maxSynonyms: 6, // Maximum synonyms per word (used for display)
         maxAntonyms: 6, // Maximum antonyms per word (used for display)
         cacheSize: 100, // Maximum number of cached words
-        apiTimeout: 10000 // API request timeout in milliseconds
+        apiTimeout: 5000, // API request timeout in milliseconds (reduced for faster response)
+        debounceDelay: 100, // Debounce delay for selection events (ms)
+        resizeDebounceDelay: 150, // Debounce delay for resize events (ms)
+        animationDuration: 300 // UI animation duration (ms)
     };
 
     // Load settings from userscript storage
@@ -82,6 +85,19 @@
             GM_setValue('wordglance-cache-definitions', '{}');
             GM_setValue('wordglance-cache-translations', '{}');
         }
+    }
+
+    // Utility function for debouncing
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
     }
 
     // Save cache to storage
@@ -172,14 +188,26 @@
         'ms': 'Malay', 'tl': 'Filipino', 'sw': 'Swahili', 'am': 'Amharic', 'zu': 'Zulu'
     };
 
-    // Add custom styles
+    // Add custom styles with CSS custom properties for easier theming
     GM_addStyle(`
+        :root {
+            --wordglance-primary-color: #3498db;
+            --wordglance-primary-hover: #2980b9;
+            --wordglance-dark-primary: #ff6b6b;
+            --wordglance-dark-primary-hover: #ff5252;
+            --wordglance-text-color: #2c3e50;
+            --wordglance-bg-color: #ffffff;
+            --wordglance-border-color: #e0e0e0;
+            --wordglance-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --wordglance-animation-duration: ${CONFIG.animationDuration}ms;
+        }
+        
         .wordglance-tooltip {
             position: absolute;
-            background: #ffffff;
-            border: 1px solid #e0e0e0;
+            background: var(--wordglance-bg-color);
+            border: 1px solid var(--wordglance-border-color);
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--wordglance-shadow);
             padding: 16px;
             max-width: 320px;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -188,12 +216,13 @@
             z-index: ${CONFIG.tooltipZIndex};
             display: none;
             pointer-events: auto;
-            transition: opacity 0.3s ease, transform 0.3s ease; /* Slower transitions */
+            transition: opacity var(--wordglance-animation-duration) ease, transform var(--wordglance-animation-duration) ease;
             word-wrap: break-word;
             overflow-wrap: break-word;
             opacity: 0;
             transform: translateY(-10px) scale(0.95);
             will-change: transform, opacity; /* Optimize for animations */
+            contain: layout style paint; /* CSS containment for better performance */
         }
         
         .wordglance-tooltip.show {
@@ -210,7 +239,7 @@
         
         .wordglance-trigger-icon {
             position: absolute;
-            background: #3498db;
+            background: var(--wordglance-primary-color);
             color: white;
             border: none;
             border-radius: 50%;
@@ -221,7 +250,7 @@
             z-index: ${CONFIG.tooltipZIndex - 1};
             display: none;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.25s ease, background-color 0.25s ease; /* Slower animations */
+            transition: transform 0.25s ease, background-color 0.25s ease;
             font-weight: bold;
             opacity: 0;
             transform: scale(0.8);
@@ -244,16 +273,16 @@
         }
         
         .wordglance-trigger-icon:hover {
-            background: #2980b9;
+            background: var(--wordglance-primary-hover);
             transform: scale(1.1);
         }
         
         .wordglance-trigger-icon.dark-mode {
-            background: #ff6b6b;
+            background: var(--wordglance-dark-primary);
         }
         
         .wordglance-trigger-icon.dark-mode:hover {
-            background: #ff5252;
+            background: var(--wordglance-dark-primary-hover);
         }
         
         .wordglance-tooltip .definition-section {
@@ -382,12 +411,6 @@
         
         .wordglance-tooltip.dark-mode .definition-text {
             color: #e0e0e0;
-        }
-        
-        .wordglance-tooltip .translation-item {
-            margin-bottom: 4px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
         }
         
         .wordglance-tooltip .translation-grid {
@@ -1706,21 +1729,17 @@
         }
     }
 
-    // Window resize handler - recalculate current page heights
-    window.addEventListener('resize', () => {
+    // Window resize handler - recalculate current page heights (now debounced)
+    const debouncedResizeHandler = debounce(() => {
         if (!tooltip || tooltip.style.display === 'none') return;
         
-        if (resizeTimeout) {
-            clearTimeout(resizeTimeout);
-        }
-        
-        resizeTimeout = setTimeout(() => {
-            definitionPageHeights[currentDefinitionPage] = recalcCurrentPageHeight('definition');
-            translationPageHeights[currentTranslationPage] = recalcCurrentPageHeight('translation');
-            setContainerHeightFromCache('definition');
-            setContainerHeightFromCache('translation');
-        }, 100); // Slightly longer for smoother batch updates
-    });
+        definitionPageHeights[currentDefinitionPage] = recalcCurrentPageHeight('definition');
+        translationPageHeights[currentTranslationPage] = recalcCurrentPageHeight('translation');
+        setContainerHeightFromCache('definition');
+        setContainerHeightFromCache('translation');
+    }, CONFIG.resizeDebounceDelay); // Configurable debounce delay
+    
+    window.addEventListener('resize', debouncedResizeHandler);
 
     // Recalculate height for current page (used on window resize)
     function recalcCurrentPageHeight(kind) {
@@ -1791,10 +1810,14 @@
         });
     }
 
-    // Fetch definition from Free Dictionary API
+    /**
+     * Fetches word definition from Dictionary API with caching and fast response
+     * @param {string} word - The word to look up
+     * @returns {Promise<Object>} - Promise resolving to definition data with pages, synonyms, and antonyms
+     */
     function fetchDefinition(word) {
         return new Promise((resolve, reject) => {
-            // Check cache first
+            // Check cache first for instant response
             const cached = getFromCache('definitions', word);
             if (cached) {
                 resolve(cached);
@@ -1905,10 +1928,14 @@
         });
     }
 
-    // Fetch translation from Free Translate API
+    /**
+     * Fetches text translation with caching and fast response
+     * @param {string} text - The text to translate
+     * @returns {Promise<Object>} - Promise resolving to translation data with pages
+     */
     function fetchTranslation(text) {
         return new Promise((resolve, reject) => {
-            // Check cache first
+            // Check cache first for instant response
             const cached = getFromCache('translations', text);
             if (cached) {
                 resolve(cached);
@@ -2059,11 +2086,8 @@
         activeRequests.clear();
     }
     
-    // Show tooltip with content
-    function showTooltip(selectedText, x, y) {
-        // Cancel any active requests from previous selections
-        cancelActiveRequests();
-        
+    // Helper function to initialize tooltip content
+    function initializeTooltipContent(selectedText) {
         if (!tooltip) {
             tooltip = createTooltip();
         }
@@ -2102,7 +2126,10 @@
         if (wordTitle) {
             wordTitle.textContent = selectedText;
         }
-        
+    }
+
+    // Helper function to setup initial tooltip display
+    function setupTooltipDisplay(x, y) {
         // Position and show tooltip
         tooltip.style.display = 'block';
         positionTooltip(tooltip, x, y);
@@ -2119,154 +2146,172 @@
                 tooltip.classList.add('show');
             }
         });
+    }
 
-        // Fetch definition
-        fetchDefinition(selectedText)
-            .then(result => {
-                definitionData = result;
-                const definitionSlider = tooltip.querySelector('.definition-slider');
-                const container = tooltip.querySelector('.definition-section .content-container');
+    // Helper function to handle definition fetching and rendering
+    async function handleDefinitionFetch(selectedText) {
+        try {
+            const result = await fetchDefinition(selectedText);
+            definitionData = result;
+            const definitionSlider = tooltip.querySelector('.definition-slider');
+            
+            // Create pages
+            let pagesHtml = '';
+            result.pages.forEach((page, pageIndex) => {
+                let pageHtml = '<div class="content-page">';
                 
-                // Create pages
-                let pagesHtml = '';
-                result.pages.forEach((page, pageIndex) => {
-                    let pageHtml = '<div class="content-page">';
-                    
-                    // Add definitions
-                    page.forEach(def => {
-                        pageHtml += `
-                            <div class="definition-item">
-                                <span class="part-of-speech">${def.partOfSpeech}</span>
-                                <div class="definition-text">${def.definition}</div>
-                                ${def.example ? `<div class="example">"${def.example}"</div>` : ''}
-                            </div>
-                        `;
-                    });
-                    
-                    pageHtml += '</div>';
-                    pagesHtml += pageHtml;
+                // Add definitions
+                page.forEach(def => {
+                    pageHtml += `
+                        <div class="definition-item">
+                            <span class="part-of-speech">${def.partOfSpeech}</span>
+                            <div class="definition-text">${def.definition}</div>
+                            ${def.example ? `<div class="example">"${def.example}"</div>` : ''}
+                        </div>
+                    `;
                 });
                 
-                definitionSlider.innerHTML = pagesHtml;
-                
-                // Handle synonyms and antonyms in separate section
-                const synonymsAntonymsSection = tooltip.querySelector('.synonyms-antonyms-section');
-                const synonymsAntonymsContent = tooltip.querySelector('.synonyms-antonyms-content');
-                
-                if (result.synonyms.length > 0 || result.antonyms.length > 0) {
-                    let synonymsAntonymsHtml = '<div class="synonyms-antonyms">';
-                    
-                    if (result.synonyms.length > 0) {
-                        synonymsAntonymsHtml += `
-                            <div class="synonyms">
-                                <span class="synonyms-label">Synonyms:</span> 
-                                <span class="synonyms-list">${result.synonyms.join(', ')}</span>
-                            </div>
-                        `;
-                    }
-                    
-                    if (result.antonyms.length > 0) {
-                        synonymsAntonymsHtml += `
-                            <div class="antonyms">
-                                <span class="antonyms-label">Antonyms:</span> 
-                                <span class="antonyms-list">${result.antonyms.join(', ')}</span>
-                            </div>
-                        `;
-                    }
-                    
-                    synonymsAntonymsHtml += '</div>';
-                    synonymsAntonymsContent.innerHTML = synonymsAntonymsHtml;
-                    synonymsAntonymsSection.style.display = 'block';
-                } else {
-                    synonymsAntonymsSection.style.display = 'none';
-                }
-                // Measure each page's natural height for caching
-                definitionPageHeights = Array.from(definitionSlider.children).map(page => {
-                    return measurePageHeight(page);
-                });
-                
-                // Track successful word lookup
-                incrementWordsLearned();
-                
-                // Smooth transition to final height with slight delay for better visual flow
-                updateDefinitionSlider(true);
-                
-                // Staggered transition for smoother feel
-                setTimeout(() => {
-                    setContainerHeightFromCache('definition', false);
-                }, 50);
-            })
-            .catch(error => {
-                const definitionSlider = tooltip.querySelector('.definition-slider');
-                definitionSlider.innerHTML = `<div class="content-page"><span class="error">${error}</span></div>`;
-                definitionPageHeights = [40]; // Fixed height for error state
-                updateDefinitionSlider(true);
-                
-                // Smooth transition to error state height with delay
-                setTimeout(() => {
-                    setContainerHeightFromCache('definition', false);
-                }, 50);
-                
-                // Hide synonyms/antonyms section on error
-                const synonymsAntonymsSection = tooltip.querySelector('.synonyms-antonyms-section');
-                if (synonymsAntonymsSection) {
-                    synonymsAntonymsSection.style.display = 'none';
-                }
+                pageHtml += '</div>';
+                pagesHtml += pageHtml;
             });
+            
+            definitionSlider.innerHTML = pagesHtml;
+            
+            // Handle synonyms and antonyms in separate section
+            const synonymsAntonymsSection = tooltip.querySelector('.synonyms-antonyms-section');
+            const synonymsAntonymsContent = tooltip.querySelector('.synonyms-antonyms-content');
+            
+            if (result.synonyms.length > 0 || result.antonyms.length > 0) {
+                let synonymsAntonymsHtml = '<div class="synonyms-antonyms">';
+                
+                if (result.synonyms.length > 0) {
+                    synonymsAntonymsHtml += `
+                        <div class="synonyms">
+                            <span class="synonyms-label">Synonyms:</span> 
+                            <span class="synonyms-list">${result.synonyms.join(', ')}</span>
+                        </div>
+                    `;
+                }
+                
+                if (result.antonyms.length > 0) {
+                    synonymsAntonymsHtml += `
+                        <div class="antonyms">
+                            <span class="antonyms-label">Antonyms:</span> 
+                            <span class="antonyms-list">${result.antonyms.join(', ')}</span>
+                        </div>
+                    `;
+                }
+                
+                synonymsAntonymsHtml += '</div>';
+                synonymsAntonymsContent.innerHTML = synonymsAntonymsHtml;
+                synonymsAntonymsSection.style.display = 'block';
+            } else {
+                synonymsAntonymsSection.style.display = 'none';
+            }
+            
+            // Measure each page's natural height for caching
+            definitionPageHeights = Array.from(definitionSlider.children).map(page => {
+                return measurePageHeight(page);
+            });
+            
+            // Track successful word lookup
+            incrementWordsLearned();
+            
+            // Smooth transition to final height with slight delay for better visual flow
+            updateDefinitionSlider(true);
+            
+            // Staggered transition for smoother feel
+            setTimeout(() => {
+                setContainerHeightFromCache('definition', false);
+            }, 50);
+        } catch (error) {
+            const definitionSlider = tooltip.querySelector('.definition-slider');
+            definitionSlider.innerHTML = `<div class="content-page"><span class="error">${error}</span></div>`;
+            definitionPageHeights = [40]; // Fixed height for error state
+            updateDefinitionSlider(true);
+            
+            // Smooth transition to error state height with delay
+            setTimeout(() => {
+                setContainerHeightFromCache('definition', false);
+            }, 50);
+            
+            // Hide synonyms/antonyms section on error
+            const synonymsAntonymsSection = tooltip.querySelector('.synonyms-antonyms-section');
+            if (synonymsAntonymsSection) {
+                synonymsAntonymsSection.style.display = 'none';
+            }
+        }
+    }
 
-        // Fetch translation
-        fetchTranslation(selectedText)
-            .then(result => {
-                translationData = result;
-                const translationSlider = tooltip.querySelector('.translation-slider');
-                const container = tooltip.querySelector('.translation-section .content-container');
+    // Helper function to handle translation fetching and rendering
+    async function handleTranslationFetch(selectedText) {
+        try {
+            const result = await fetchTranslation(selectedText);
+            translationData = result;
+            const translationSlider = tooltip.querySelector('.translation-slider');
+            
+            // Create pages with grid layout
+            let pagesHtml = '';
+            result.pages.forEach((page, pageIndex) => {
+                let pageHtml = '<div class="content-page">';
+                pageHtml += '<div class="translation-grid">';
                 
-                // Create pages with grid layout
-                let pagesHtml = '';
-                result.pages.forEach((page, pageIndex) => {
-                    let pageHtml = '<div class="content-page">';
-                    pageHtml += '<div class="translation-grid">';
-                    
-                    page.forEach(translation => {
-                        pageHtml += `<div class="translation-text">${translation}</div>`;
-                    });
-                    
-                    // Fill empty grid cells if needed (for consistent 2x2 layout)
-                    const emptyCells = CONFIG.translationsPerPage - page.length;
-                    for (let i = 0; i < emptyCells; i++) {
-                        pageHtml += '<div class="translation-text" style="opacity: 0; pointer-events: none;"></div>';
-                    }
-                    
-                    pageHtml += '</div>';
-                    pageHtml += '</div>';
-                    pagesHtml += pageHtml;
+                page.forEach(translation => {
+                    pageHtml += `<div class="translation-text">${translation}</div>`;
                 });
                 
-                translationSlider.innerHTML = pagesHtml;
-                // Measure each page's natural height for caching  
-                translationPageHeights = Array.from(translationSlider.children).map(page => {
-                    return measurePageHeight(page);
-                });
+                // Fill empty grid cells if needed (for consistent 2x2 layout)
+                const emptyCells = CONFIG.translationsPerPage - page.length;
+                for (let i = 0; i < emptyCells; i++) {
+                    pageHtml += '<div class="translation-text" style="opacity: 0; pointer-events: none;"></div>';
+                }
                 
-                // Smooth transition to final height with slight delay for better visual flow
-                updateTranslationSlider(true);
-                
-                // Staggered transition for smoother feel
-                setTimeout(() => {
-                    setContainerHeightFromCache('translation', false);
-                }, 100); // Slightly longer delay for translation to create nice flow
-            })
-            .catch(error => {
-                const translationSlider = tooltip.querySelector('.translation-slider');
-                translationSlider.innerHTML = `<div class="content-page"><span class="error">${error}</span></div>`;
-                translationPageHeights = [40]; // Fixed height for error state
-                updateTranslationSlider(true);
-                
-                // Smooth transition to error state height with delay
-                setTimeout(() => {
-                    setContainerHeightFromCache('translation', false);
-                }, 100);
+                pageHtml += '</div>';
+                pageHtml += '</div>';
+                pagesHtml += pageHtml;
             });
+            
+            translationSlider.innerHTML = pagesHtml;
+            
+            // Measure each page's natural height for caching  
+            translationPageHeights = Array.from(translationSlider.children).map(page => {
+                return measurePageHeight(page);
+            });
+            
+            // Smooth transition to final height with slight delay for better visual flow
+            updateTranslationSlider(true);
+            
+            // Staggered transition for smoother feel
+            setTimeout(() => {
+                setContainerHeightFromCache('translation', false);
+            }, 100); // Slightly longer delay for translation to create nice flow
+        } catch (error) {
+            const translationSlider = tooltip.querySelector('.translation-slider');
+            translationSlider.innerHTML = `<div class="content-page"><span class="error">${error}</span></div>`;
+            translationPageHeights = [40]; // Fixed height for error state
+            updateTranslationSlider(true);
+            
+            // Smooth transition to error state height with delay
+            setTimeout(() => {
+                setContainerHeightFromCache('translation', false);
+            }, 100);
+        }
+    }
+    
+    // Show tooltip with content (refactored for better modularity)
+    function showTooltip(selectedText, x, y) {
+        // Cancel any active requests from previous selections
+        cancelActiveRequests();
+        
+        // Initialize tooltip content
+        initializeTooltipContent(selectedText);
+        
+        // Setup tooltip display
+        setupTooltipDisplay(x, y);
+
+        // Fetch definition and translation in parallel
+        handleDefinitionFetch(selectedText);
+        handleTranslationFetch(selectedText);
     }
 
     // Position tooltip near selection
@@ -2363,7 +2408,11 @@
         });
     }
 
-    // Enhanced input sanitization function
+    /**
+     * Enhanced input sanitization and validation function
+     * @param {string} text - The text to sanitize and validate
+     * @returns {Object} - Object with valid boolean, sanitized text, and error message
+     */
     function sanitizeAndValidateText(text) {
         if (!text || typeof text !== 'string') {
             return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT') };
@@ -2391,8 +2440,9 @@
             return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT') };
         }
         
-        // Content validation - allow Unicode letters, spaces, hyphens, apostrophes, dots, and common accented characters
-        if (!/^[\p{L}\s\-'\.]+$/u.test(sanitized)) {
+        // Content validation - Simple check that works across all userscript environments
+        // Allow word characters, spaces, common punctuation, and basic Unicode ranges
+        if (!/^[\w\u00C0-\u024F\u0300-\u036F\u0400-\u04FF\u0590-\u05FF\u0600-\u06FF\u0900-\u097F\u0980-\u09FF\u0A00-\u0A7F\u0A80-\u0AFF\u0B00-\u0B7F\u0B80-\u0BFF\u0C00-\u0C7F\u0C80-\u0CFF\u0D00-\u0D7F\u0E00-\u0E7F\u0F00-\u0FFF\u1000-\u109F\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF\uAC00-\uD7AF\u200c\u200d\s\-\'\.\,\;\:\!\?]+$/.test(sanitized)) {
             return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT') };
         }
         
@@ -2401,8 +2451,8 @@
             return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT') };
         }
         
-        // Exclude pure punctuation
-        if (/^[^\p{L}]+$/u.test(sanitized)) {
+        // Must contain at least one letter (basic check for common scripts)
+        if (!/[a-zA-Z\u00C0-\u024F\u0400-\u04FF\u0590-\u05FF\u0600-\u06FF\u0900-\u097F\u0980-\u09FF\u0A00-\u0A7F\u0A80-\u0AFF\u0B00-\u0B7F\u0B80-\u0BFF\u0C00-\u0C7F\u0C80-\u0CFF\u0D00-\u0D7F\u0E00-\u0E7F\u0F00-\u0FFF\u1000-\u109F\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF\uAC00-\uD7AF]/.test(sanitized)) {
             return { valid: false, sanitized: '', error: createErrorMessage('INVALID_INPUT') };
         }
         
@@ -2533,4 +2583,11 @@
     window.addEventListener('beforeunload', cleanup);
 
     console.log('WordGlance userscript loaded! Select text and click the 📖 icon to see definitions and translations.');
+    
+    // Final initialization complete
+    console.log(`WordGlance v2.1.0 initialized with:
+    - ${Object.keys(LANGUAGES).length} supported languages
+    - ${CONFIG.cacheSize} item cache per type
+    - ${CONFIG.rateLimitPerMinute} requests/minute rate limit
+    - Enhanced performance optimizations`);
 })();
